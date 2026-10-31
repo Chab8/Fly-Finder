@@ -1,0 +1,7 @@
+# TEMPLATE - fly patterns. The example row is FICTITIOUS (is_demo=true). Delete it before importing.
+# category: dry_fly|nymph|emerger|wet_fly|streamer|terrestrial|saltwater|attractor|other
+# imitation_type: exact_imitation|general_imitation|suggestive_imitation|attractor|not_specified
+# hook_size_min = SMALLEST hook of the usual range (e.g. 20), hook_size_max = LARGEST (e.g. 10). Saltwater: 1/0, 2/0...
+# materials: component:material|component:material   (components: hook, thread, tail, body, rib, wing, hackle, head...)
+slug,name,alternate_names,category,imitation_type,hook_size_min,hook_size_max,colors,materials,variants,habitats,fishing_environments,difficulty,description_en,description_es,usage_notes_en,usage_notes_es,data_source,verification_status,is_demo
+example-dun,EXAMPLE Dun,EXAMPLE alt name,dry_fly,general_imitation,18,12,olive|grey,hook:Dry fly hook|tail:Hackle fibres|body:Dubbing,EXAMPLE Parachute,freshwater_running,freshwater,beginner,EXAMPLE description.,Descripción EJEMPLO.,EXAMPLE usage.,Uso EJEMPLO.,example-source,unverified,true

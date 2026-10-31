@@ -1,0 +1,127 @@
+{
+  "id": "278cef91-100d-5c4a-97b0-8278f7144d42",
+  "scientific_name": "Baetis",
+  "common_name": "Blue-winged olive (BWO)",
+  "taxonomic_rank": "genus",
+  "order": "Ephemeroptera",
+  "family": "Baetidae",
+  "genus": "Baetis",
+  "organism_group": "aquatic_insect",
+  "thumbnail_url": null,
+  "is_demo": false,
+  "taxonomy": {
+    "kingdom": "Animalia",
+    "phylum": "Arthropoda",
+    "class_name": "Insecta",
+    "order": "Ephemeroptera",
+    "family": "Baetidae",
+    "genus": "Baetis",
+    "species": null
+  },
+  "gbif_taxon_id": 1407108,
+  "inaturalist_taxon_id": 123939,
+  "common_names": [
+    {
+      "language": "en",
+      "name": "Blue-winged olive",
+      "is_primary": true
+    },
+    {
+      "language": "es",
+      "name": "Blue-winged olive (BWO)",
+      "is_primary": true
+    }
+  ],
+  "synonyms": [],
+  "habitats": [
+    "freshwater_running"
+  ],
+  "life_stages": [
+    "egg",
+    "nymph",
+    "emerger",
+    "subimago",
+    "imago"
+  ],
+  "size_min": null,
+  "size_max": null,
+  "size_unit": null,
+  "geographic_distribution": null,
+  "description": "Género de efímeras pequeñas; uno de los géneros más difundidos en arroyos del hemisferio norte.",
+  "fishing_notes": "Objetivo clásico de duns, emergentes y ninfas pequeñas de cuerpo oliva.",
+  "text_language": "es",
+  "images": [],
+  "imitated_by": [
+    {
+      "life_stage": "subimago",
+      "match_type": "general_imitation",
+      "biological_compatibility": "high",
+      "expert_verified": false,
+      "verification_source": null,
+      "notes": "Drafted from general fly-fishing references; pending expert review.",
+      "fly": {
+        "id": "b98ec702-c3a8-510f-92ed-e7cc580dcd45",
+        "slug": "blue-winged-olive",
+        "name": "Blue-Winged Olive",
+        "category": "dry_fly",
+        "imitation_type": "general_imitation",
+        "hook_size_min": "24",
+        "hook_size_max": "14",
+        "colors": [
+          "olive",
+          "grey"
+        ],
+        "thumbnail_url": null,
+        "is_demo": false
+      }
+    },
+    {
+      "life_stage": "emerger",
+      "match_type": "general_imitation",
+      "biological_compatibility": "high",
+      "expert_verified": false,
+      "verification_source": null,
+      "notes": "Drafted from general fly-fishing references; pending expert review.",
+      "fly": {
+        "id": "d2346478-7eee-51bf-b387-f38d862f5162",
+        "slug": "rs2",
+        "name": "RS2",
+        "category": "emerger",
+        "imitation_type": "general_imitation",
+        "hook_size_min": "24",
+        "hook_size_max": "16",
+        "colors": [
+          "grey",
+          "olive"
+        ],
+        "thumbnail_url": null,
+        "is_demo": false
+      }
+    },
+    {
+      "life_stage": "nymph",
+      "match_type": "general_imitation",
+      "biological_compatibility": "high",
+      "expert_verified": false,
+      "verification_source": null,
+      "notes": "Drafted from general fly-fishing references; pending expert review.",
+      "fly": {
+        "id": "bf3ad86e-9c13-58f6-abec-d5142fbfc9a7",
+        "slug": "pheasant-tail-nymph",
+        "name": "Pheasant Tail Nymph",
+        "category": "nymph",
+        "imitation_type": "general_imitation",
+        "hook_size_min": "20",
+        "hook_size_max": "12",
+        "colors": [
+          "brown",
+          "copper"
+        ],
+        "thumbnail_url": "https://upload.wikimedia.org/wikipedia/commons/8/83/Pheasant_Tail_Nymph.jpg",
+        "is_demo": false
+      }
+    }
+  ],
+  "data_source": "curated_general_reference",
+  "verification_status": "source_verified"
+}

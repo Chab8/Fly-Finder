@@ -1,0 +1,5 @@
+# TEMPLATE - organism <-> fly relations. The example row is FICTITIOUS. Delete it before importing.
+# Only add relations you can source. expert_verified=true REQUIRES verification_source (expert name or publication).
+# biological_compatibility: high|medium|low|unknown ; life_stage must be one of the organism's life stages.
+organism_scientific_name,fly_slug,life_stage,match_type,biological_compatibility,expert_verified,verification_source,notes
+Exampleus fictus,example-dun,subimago,general_imitation,high,false,,EXAMPLE relation (fictitious).

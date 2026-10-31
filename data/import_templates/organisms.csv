@@ -1,0 +1,9 @@
+# TEMPLATE - organisms. The example row is FICTITIOUS (is_demo=true). Delete it before importing.
+# Multi-value cells use '|'. First common name per language is the primary one.
+# taxonomic_rank: kingdom|phylum|class|subclass|order|suborder|infraorder|superfamily|family|subfamily|genus|species|subspecies|other
+# organism_group: aquatic_insect|terrestrial_insect|crustacean|annelid|mollusc|fish|other
+# habitats: freshwater_running|freshwater_still|estuarine|marine|terrestrial
+# life_stages: egg|larva|nymph|pupa|emerger|subimago|imago|adult|juvenile|other|unknown
+# size_min/size_max only from a citable source; size_unit=mm. Leave gbif_taxon_id empty and run scripts/enrich_taxonomy.py.
+scientific_name,taxonomic_rank,kingdom,phylum,class,order,family,genus,species,gbif_taxon_id,inaturalist_taxon_id,organism_group,habitats,life_stages,size_min,size_max,size_unit,geographic_distribution,common_names_en,common_names_es,description_en,description_es,fishing_notes_en,fishing_notes_es,synonyms,data_source,verification_status,is_demo
+Exampleus fictus,species,Animalia,,,Exampleptera,Exampleidae,Exampleus,Exampleus fictus,,,aquatic_insect,freshwater_running,egg|nymph|subimago|imago,8,12,mm,EXAMPLE region,EXAMPLE mayfly,Efímera EJEMPLO,EXAMPLE description.,Descripción EJEMPLO.,EXAMPLE notes.,Notas EJEMPLO.,,example-source,unverified,true

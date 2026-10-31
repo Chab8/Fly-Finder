@@ -1,0 +1,20 @@
+[
+  {
+    "id": "1ea8096d-025e-47cc-a6de-7cf853bd5ecd",
+    "kind": "fly",
+    "created_at": "2026-10-31T19:45:37.580561Z",
+    "match_level": "high_match",
+    "primary_label": "Woolly Bugger",
+    "image_stored": false,
+    "is_demo": false
+  },
+  {
+    "id": "c753d394-a3ab-424d-8842-16a1aae9231f",
+    "kind": "organism",
+    "created_at": "2026-10-31T19:45:37.557522Z",
+    "match_level": "high_match",
+    "primary_label": "Baetis",
+    "image_stored": false,
+    "is_demo": false
+  }
+]

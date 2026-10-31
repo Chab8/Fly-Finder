@@ -1,0 +1,3 @@
+# DEMO DATA - FICTIONAL product. No price on purpose: the app never shows invented prices.
+store_slug,external_id,name,brand,description,product_url,affiliate_url,price,currency,availability_status,country,last_verified_at,active,is_demo,fly_slug,size,color,variant
+demo-fly-shop,DEMO-001,DEMO Nymph #14 (fictional),DEMO,Fictional product.,https://example.com/demo-nymph,,,,unknown,AR,,true,true,demo-nymph,14,olive,

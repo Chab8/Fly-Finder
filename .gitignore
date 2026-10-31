@@ -1,0 +1,61 @@
+# --- Secrets: never commit real credentials ---
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+service-account*.json
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+*.egg-info/
+dist/
+build/
+
+# --- Model weights / caches (downloaded at runtime) ---
+.cache/
+*.pt
+*.safetensors
+*.bin
+
+# --- Data that must not be committed ---
+# User uploads and downloaded third-party images stay out of git.
+data/evaluation/images/
+data/downloads/
+data/review/*.csv
+!data/review/.gitkeep
+backend/var/
+
+# --- Supabase local ---
+supabase/.branches/
+supabase/.temp/
+supabase/.env
+
+# --- Flutter / Dart ---
+mobile/.dart_tool/
+mobile/.flutter-plugins
+mobile/.flutter-plugins-dependencies
+mobile/build/
+mobile/.packages
+mobile/ios/Pods/
+mobile/ios/.symlinks/
+mobile/ios/Flutter/Flutter.framework
+mobile/ios/Flutter/App.framework
+mobile/android/.gradle/
+mobile/android/local.properties
+mobile/android/app/release/
+*.iml
+
+# --- OS / editors ---
+.DS_Store
+.idea/
+.vscode/*
+!.vscode/extensions.json

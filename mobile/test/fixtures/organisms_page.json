@@ -1,0 +1,19 @@
+{
+  "items": [
+    {
+      "id": "278cef91-100d-5c4a-97b0-8278f7144d42",
+      "scientific_name": "Baetis",
+      "common_name": "Blue-winged olive",
+      "taxonomic_rank": "genus",
+      "order": "Ephemeroptera",
+      "family": "Baetidae",
+      "genus": "Baetis",
+      "organism_group": "aquatic_insect",
+      "thumbnail_url": null,
+      "is_demo": false
+    }
+  ],
+  "total": 1,
+  "limit": 50,
+  "offset": 0
+}

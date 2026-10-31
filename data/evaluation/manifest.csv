@@ -1,0 +1,28 @@
+# Evaluation manifest. Photos go in data/evaluation/images/ (git-ignored) and must NOT be in the catalog.
+# kind: organism | fly. expected_outcome: identified | inconclusive | not_compatible | insufficient_image
+# Leave expected_* columns empty when unknown. expected_fly_slugs: acceptable recommendations, '|' separated.
+# Seed set 2026-10-31: iNaturalist observations (page 2, not used in the catalog) and Wikimedia Commons files held out
+# from fly_images.csv. Download the photos again from source_url if data/evaluation/images/ is empty.
+image_path,kind,expected_outcome,expected_order,expected_family,expected_genus,expected_species,expected_pattern_slug,expected_fly_slugs,source_url,license,attribution
+images/organisms/baetidae_nymph_1.jpg,organism,identified,Ephemeroptera,Baetidae,,,,pheasant-tail-nymph,https://www.inaturalist.org/photos/443996819,CC BY 4.0,"(c) Óscar Sampedro, some rights reserved (CC BY)"
+images/organisms/heptageniidae_nymph_1.jpg,organism,identified,Ephemeroptera,Heptageniidae,,,,hares-ear-nymph,https://www.inaturalist.org/photos/162189437,CC0 1.0,no rights reserved
+images/organisms/perlidae_nymph_0.jpg,organism,identified,Plecoptera,Perlidae,,,,kaufmanns-stone|pats-rubber-legs,https://www.inaturalist.org/photos/84755708,CC BY 4.0,"(c) Lee Cain, some rights reserved (CC BY)"
+images/organisms/hydropsychidae_larva_0.jpg,organism,identified,Trichoptera,Hydropsychidae,,,,czech-nymph|walts-worm,https://www.inaturalist.org/photos/257182602,CC BY 4.0,"(c) Johan Kjær Prehn, some rights reserved (CC BY)"
+images/organisms/limnephilidae_larva_0.jpg,organism,identified,Trichoptera,Limnephilidae,,,,cased-caddis,https://www.inaturalist.org/photos/631416855,CC BY 4.0,"(c) Jonas V., some rights reserved (CC BY)"
+images/organisms/chironomidae_larva_1.jpg,organism,identified,Diptera,Chironomidae,,,,bloodworm|brassie,https://www.inaturalist.org/photos/72169649,CC0 1.0,no rights reserved
+images/organisms/ephemeridae_adult_1.jpg,organism,identified,Ephemeroptera,Ephemeridae,,,,green-drake,https://www.inaturalist.org/photos/313780934,CC BY 4.0,"(c) Chris walker, some rights reserved (CC BY)"
+images/organisms/aeshnidae_nymph_0.jpg,organism,identified,Odonata,Aeshnidae,,,,dragonfly-nymph|woolly-bugger,https://www.inaturalist.org/photos/290031677,CC BY 4.0,"(c) Daniel Schelesky, some rights reserved (CC BY)"
+images/organisms/acrididae_adult_0.jpg,organism,identified,Orthoptera,Acrididae,,,,chernobyl-ant|chubby-chernobyl|daves-hopper|stimulator,https://www.inaturalist.org/photos/113481941,CC BY 4.0,"(c) Holger Braun, some rights reserved (CC BY)"
+images/organisms/formicidae_adult_0.jpg,organism,identified,Hymenoptera,Formicidae,,,,chernobyl-ant|parachute-ant,https://www.inaturalist.org/photos/157573226,CC BY 4.0,"(c) Jake Nitta, some rights reserved (CC BY)"
+images/organisms/cambaridae_1.jpg,organism,identified,Decapoda,Cambaridae,,,,woolly-bugger,https://www.inaturalist.org/photos/22605924,CC BY 4.0,"(c) westcoasthikers, some rights reserved (CC BY)"
+images/organisms/gammarus_0.jpg,organism,identified,Amphipoda,Gammaridae,Gammarus,,,scud,https://www.inaturalist.org/photos/183831261,CC0 1.0,no rights reserved
+images/organisms/cottidae_1.jpg,organism,identified,Scorpaeniformes,Cottidae,,,,muddler-minnow|woolly-bugger|zonker,https://www.inaturalist.org/photos/552925173,CC BY 4.0,"(c) Evan, some rights reserved (CC BY)"
+images/organisms/raccoon_control.jpg,organism,not_compatible,,,,,,,https://www.inaturalist.org/photos/511041848,CC BY 4.0,"(c) Lauren McLaurin, some rights reserved (CC BY)"
+images/organisms/blurred_control.jpg,organism,insufficient_image,,,,,,,https://www.inaturalist.org/photos/495250380,CC0 1.0,no rights reserved (blurred on purpose)
+images/flies/adams.jpg,fly,identified,,,,,adams,,https://commons.wikimedia.org/wiki/File:AdamsDryFly.jpg,Public domain,"Mike Cline, Public domain, via Wikimedia Commons"
+images/flies/crazy-charlie.jpg,fly,identified,,,,,crazy-charlie,,https://commons.wikimedia.org/wiki/File:Crazy_Charlie_Bonefish_fly_variation_01.jpg,CC BY-SA 4.0,"Mike Cline, CC BY-SA 4.0, via Wikimedia Commons"
+images/flies/elk-hair-caddis.jpg,fly,identified,,,,,elk-hair-caddis,,https://commons.wikimedia.org/wiki/File:Elk_Hair_Caddis_(cropped).JPG,CC BY-SA 3.0,"Mike Cline, CC BY-SA 3.0, via Wikimedia Commons"
+images/flies/muddler-minnow.jpg,fly,identified,,,,,muddler-minnow,,https://commons.wikimedia.org/wiki/File:Muddler_Minnow.jpg,Public domain,"Marc Yarascavitch assumed (based on copyright claims)., Public domain, via Wikimedia Commons"
+images/flies/royal-wulff.jpg,fly,identified,,,,,royal-wulff,,https://commons.wikimedia.org/wiki/File:RoyalWulffDryFly.jpg,Public domain,"Mike Cline, Public domain, via Wikimedia Commons"
+images/flies/stimulator.jpg,fly,identified,,,,,stimulator,,https://commons.wikimedia.org/wiki/File:Stimulator_dry_fly.jpg,CC BY-SA 4.0,"Mike Cline, CC BY-SA 4.0, via Wikimedia Commons"
+images/flies/woolly-bugger.jpg,fly,identified,,,,,woolly-bugger,,https://commons.wikimedia.org/wiki/File:BlackandBrownBeadheadWoollyBugger.jpg,Public domain,"Mike Cline, Public domain, via Wikimedia Commons"

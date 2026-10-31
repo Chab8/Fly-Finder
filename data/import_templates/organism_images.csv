@@ -1,0 +1,6 @@
+# TEMPLATE - organism photos. The example row is FICTITIOUS. Delete it before importing.
+# owner_key = organism scientific_name. Provide image_url OR storage_path.
+# license examples: CC0 1.0, CC BY 4.0, CC BY-SA 4.0, "Written permission 2026-10-01". attribution is mandatory.
+# permission_status: approved|pending|rejected. Only approved + commercial_use_allowed=true images are imported/shown.
+owner_key,image_url,storage_path,source,source_id,source_url,license,attribution,commercial_use_allowed,permission_status,image_view,life_stage
+Exampleus fictus,https://example.com/example-photo.jpg,,own_photo,EXAMPLE-1,https://example.com/example-photo,CC BY 4.0,EXAMPLE Photographer,true,pending,lateral,nymph

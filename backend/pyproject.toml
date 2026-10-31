@@ -1,0 +1,25 @@
+[project]
+name = "fly-finder-backend"
+version = "0.1.0"
+description = "Fly Finder API: organism and artificial fly identification for fly fishing"
+requires-python = ">=3.12"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "db: needs a local PostgreSQL with pgvector (skipped otherwise)",
+    "ml: loads the real OpenCLIP model (slow; skipped unless RUN_ML_TESTS=1)",
+    "live: calls real external APIs (skipped unless RUN_LIVE_TESTS=1)",
+]
+filterwarnings = ["ignore::DeprecationWarning:torch.*"]
+
+[tool.ruff]
+line-length = 140
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+ignore = ["E501", "B008", "UP042"]  # B008: FastAPI Depends()/Query() defaults are idiomatic
+
+[tool.ruff.lint.isort]
+known-first-party = ["app"]

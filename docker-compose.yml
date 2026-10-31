@@ -1,0 +1,21 @@
+# Local container run of the API (Docker is optional; see README for running without it).
+#   docker compose up --build
+# Configuration comes from backend/.env (never baked into the image).
+services:
+  api:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    env_file: backend/.env
+    ports:
+      - "8000:8000"
+    volumes:
+      - model-cache:/app/.cache   # OpenCLIP weights are downloaded once
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/v1/health')"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  model-cache:

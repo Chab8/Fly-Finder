@@ -1,0 +1,724 @@
+{
+  "identification_id": "c753d394-a3ab-424d-8842-16a1aae9231f",
+  "kind": "organism",
+  "match_level": "high_match",
+  "subject_type": "real_organism",
+  "image_quality": "good",
+  "primary": {
+    "rank_position": 1,
+    "scientific_name": "Baetis",
+    "taxonomic_rank": "genus",
+    "common_name": "Blue-winged olive (BWO)",
+    "order": "Ephemeroptera",
+    "family": "Baetidae",
+    "genus": "Baetis",
+    "ai_confidence": "high",
+    "visual_evidence": "Two tails, streamlined body",
+    "taxonomy": {
+      "source": "gbif",
+      "gbif_taxon_id": 1,
+      "accepted_name": "Baetis",
+      "rank": "genus",
+      "status": "ACCEPTED",
+      "match_type": "EXACT",
+      "kingdom": null,
+      "phylum": null,
+      "class_name": "Insecta",
+      "order": "Ephemeroptera",
+      "family": "Baetidae",
+      "genus": "Baetis",
+      "species": null,
+      "url": null
+    },
+    "taxonomy_verified": true,
+    "catalog_organism": {
+      "id": "278cef91-100d-5c4a-97b0-8278f7144d42",
+      "scientific_name": "Baetis",
+      "common_name": "Blue-winged olive (BWO)",
+      "taxonomic_rank": "genus",
+      "order": "Ephemeroptera",
+      "family": "Baetidae",
+      "genus": "Baetis",
+      "organism_group": "aquatic_insect",
+      "thumbnail_url": null,
+      "is_demo": false
+    },
+    "in_catalog": true
+  },
+  "alternatives": [
+    {
+      "rank_position": 2,
+      "scientific_name": "Heptageniidae",
+      "taxonomic_rank": "family",
+      "common_name": "Efímeras de cabeza plana",
+      "order": "Ephemeroptera",
+      "family": "Heptageniidae",
+      "genus": null,
+      "ai_confidence": "low",
+      "visual_evidence": "Somewhat flattened",
+      "taxonomy": null,
+      "taxonomy_verified": false,
+      "catalog_organism": {
+        "id": "ad60962c-0801-5fdd-bcee-eec9a9e875c6",
+        "scientific_name": "Heptageniidae",
+        "common_name": "Efímeras de cabeza plana",
+        "taxonomic_rank": "family",
+        "order": "Ephemeroptera",
+        "family": "Heptageniidae",
+        "genus": null,
+        "organism_group": "aquatic_insect",
+        "thumbnail_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/405643633/medium.jpg",
+        "is_demo": false
+      },
+      "in_catalog": true
+    }
+  ],
+  "life_stage": "nymph",
+  "life_stage_confidence": "moderate",
+  "visual_features": {
+    "colors": [
+      "olive",
+      "brown"
+    ],
+    "morphological_features": [
+      "two tails",
+      "plate-like gills"
+    ],
+    "estimated_length_mm": null,
+    "size_reference": null,
+    "habitat_hint": null
+  },
+  "recommendations": [
+    {
+      "fly": {
+        "id": "bf3ad86e-9c13-58f6-abec-d5142fbfc9a7",
+        "slug": "pheasant-tail-nymph",
+        "name": "Pheasant Tail Nymph",
+        "category": "nymph",
+        "imitation_type": "general_imitation",
+        "hook_size_min": "20",
+        "hook_size_max": "12",
+        "colors": [
+          "brown",
+          "copper"
+        ],
+        "thumbnail_url": "https://upload.wikimedia.org/wikipedia/commons/8/83/Pheasant_Tail_Nymph.jpg",
+        "is_demo": false
+      },
+      "tier": "biological_same_stage",
+      "matched_organism": {
+        "id": "278cef91-100d-5c4a-97b0-8278f7144d42",
+        "scientific_name": "Baetis",
+        "common_name": "Blue-winged olive (BWO)",
+        "taxonomic_rank": "genus",
+        "order": "Ephemeroptera",
+        "family": "Baetidae",
+        "genus": "Baetis",
+        "organism_group": "aquatic_insect",
+        "thumbnail_url": null,
+        "is_demo": false
+      },
+      "life_stage": "nymph",
+      "match_type": "general_imitation",
+      "biological_compatibility": "high",
+      "expert_verified": false,
+      "visual_similarity": null,
+      "ranking_score": 0.9474,
+      "components": {
+        "biological": 1.0,
+        "taxonomic_specificity": 1.0,
+        "life_stage": 1.0,
+        "imitation_type": 0.75,
+        "color": 0.5,
+        "visual": null
+      },
+      "reasons": [
+        "Imitación documentada de Baetis (ninfa).",
+        "Coincide con la etapa de vida observada.",
+        "Relación aún no verificada por un experto.",
+        "Comparte colores: brown."
+      ]
+    },
+    {
+      "fly": {
+        "id": "7cb86a35-9b3e-5df6-9719-a17bc97176fe",
+        "slug": "hares-ear-nymph",
+        "name": "Gold Ribbed Hare's Ear",
+        "category": "nymph",
+        "imitation_type": "suggestive_imitation",
+        "hook_size_min": "18",
+        "hook_size_max": "10",
+        "colors": [
+          "tan",
+          "brown"
+        ],
+        "thumbnail_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b5/Gold_ribbed_hairs_ear_trout_fly.JPG/960px-Gold_ribbed_hairs_ear_trout_fly.JPG",
+        "is_demo": false
+      },
+      "tier": "biological_same_stage",
+      "matched_organism": {
+        "id": "a5739f4c-4efd-5562-b58d-23119988cbcf",
+        "scientific_name": "Ephemeroptera",
+        "common_name": "Efímeras",
+        "taxonomic_rank": "order",
+        "order": "Ephemeroptera",
+        "family": null,
+        "genus": null,
+        "organism_group": "aquatic_insect",
+        "thumbnail_url": null,
+        "is_demo": false
+      },
+      "life_stage": "nymph",
+      "match_type": "suggestive_imitation",
+      "biological_compatibility": "medium",
+      "expert_verified": false,
+      "visual_similarity": null,
+      "ranking_score": 0.6579,
+      "components": {
+        "biological": 0.6,
+        "taxonomic_specificity": 0.3999999999999999,
+        "life_stage": 1.0,
+        "imitation_type": 0.5,
+        "color": 0.5,
+        "visual": null
+      },
+      "reasons": [
+        "Recomendada para el grupo más amplio Ephemeroptera.",
+        "Coincide con la etapa de vida observada.",
+        "Relación aún no verificada por un experto.",
+        "Comparte colores: brown."
+      ]
+    },
+    {
+      "fly": {
+        "id": "132f35a1-0a1d-5b34-ade5-18993773aaea",
+        "slug": "frenchie",
+        "name": "Frenchie",
+        "category": "nymph",
+        "imitation_type": "suggestive_imitation",
+        "hook_size_min": "18",
+        "hook_size_max": "12",
+        "colors": [
+          "brown",
+          "pink"
+        ],
+        "thumbnail_url": null,
+        "is_demo": false
+      },
+      "tier": "biological_same_stage",
+      "matched_organism": {
+        "id": "a5739f4c-4efd-5562-b58d-23119988cbcf",
+        "scientific_name": "Ephemeroptera",
+        "common_name": "Efímeras",
+        "taxonomic_rank": "order",
+        "order": "Ephemeroptera",
+        "family": null,
+        "genus": null,
+        "organism_group": "aquatic_insect",
+        "thumbnail_url": null,
+        "is_demo": false
+      },
+      "life_stage": "nymph",
+      "match_type": "suggestive_imitation",
+      "biological_compatibility": "low",
+      "expert_verified": false,
+      "visual_similarity": null,
+      "ranking_score": 0.5316,
+      "components": {
+        "biological": 0.3,
+        "taxonomic_specificity": 0.3999999999999999,
+        "life_stage": 1.0,
+        "imitation_type": 0.5,
+        "color": 0.5,
+        "visual": null
+      },
+      "reasons": [
+        "Recomendada para el grupo más amplio Ephemeroptera.",
+        "Coincide con la etapa de vida observada.",
+        "Relación aún no verificada por un experto.",
+        "Comparte colores: brown."
+      ]
+    },
+    {
+      "fly": {
+        "id": "e291669a-4945-5606-b684-30237c9f9ec6",
+        "slug": "perdigon",
+        "name": "Perdigon",
+        "category": "nymph",
+        "imitation_type": "suggestive_imitation",
+        "hook_size_min": "18",
+        "hook_size_max": "12",
+        "colors": [
+          "various"
+        ],
+        "thumbnail_url": null,
+        "is_demo": false
+      },
+      "tier": "biological_same_stage",
+      "matched_organism": {
+        "id": "a5739f4c-4efd-5562-b58d-23119988cbcf",
+        "scientific_name": "Ephemeroptera",
+        "common_name": "Efímeras",
+        "taxonomic_rank": "order",
+        "order": "Ephemeroptera",
+        "family": null,
+        "genus": null,
+        "organism_group": "aquatic_insect",
+        "thumbnail_url": null,
+        "is_demo": false
+      },
+      "life_stage": "nymph",
+      "match_type": "suggestive_imitation",
+      "biological_compatibility": "low",
+      "expert_verified": false,
+      "visual_similarity": null,
+      "ranking_score": 0.5053,
+      "components": {
+        "biological": 0.3,
+        "taxonomic_specificity": 0.3999999999999999,
+        "life_stage": 1.0,
+        "imitation_type": 0.5,
+        "color": 0.0,
+        "visual": null
+      },
+      "reasons": [
+        "Recomendada para el grupo más amplio Ephemeroptera.",
+        "Coincide con la etapa de vida observada.",
+        "Relación aún no verificada por un experto."
+      ]
+    },
+    {
+      "fly": {
+        "id": "b98ec702-c3a8-510f-92ed-e7cc580dcd45",
+        "slug": "blue-winged-olive",
+        "name": "Blue-Winged Olive",
+        "category": "dry_fly",
+        "imitation_type": "general_imitation",
+        "hook_size_min": "24",
+        "hook_size_max": "14",
+        "colors": [
+          "olive",
+          "grey"
+        ],
+        "thumbnail_url": null,
+        "is_demo": false
+      },
+      "tier": "biological_other_stage",
+      "matched_organism": {
+        "id": "278cef91-100d-5c4a-97b0-8278f7144d42",
+        "scientific_name": "Baetis",
+        "common_name": "Blue-winged olive (BWO)",
+        "taxonomic_rank": "genus",
+        "order": "Ephemeroptera",
+        "family": "Baetidae",
+        "genus": "Baetis",
+        "organism_group": "aquatic_insect",
+        "thumbnail_url": null,
+        "is_demo": false
+      },
+      "life_stage": "subimago",
+      "match_type": "general_imitation",
+      "biological_compatibility": "high",
+      "expert_verified": false,
+      "visual_similarity": null,
+      "ranking_score": 0.7105,
+      "components": {
+        "biological": 1.0,
+        "taxonomic_specificity": 1.0,
+        "life_stage": 0.1,
+        "imitation_type": 0.75,
+        "color": 0.5,
+        "visual": null
+      },
+      "reasons": [
+        "Imitación documentada de Baetis (subimago (dun)).",
+        "Imita la etapa subimago (dun), mientras que la foto muestra ninfa.",
+        "Relación aún no verificada por un experto.",
+        "Comparte colores: olive."
+      ]
+    },
+    {
+      "fly": {
+        "id": "d2346478-7eee-51bf-b387-f38d862f5162",
+        "slug": "rs2",
+        "name": "RS2",
+        "category": "emerger",
+        "imitation_type": "general_imitation",
+        "hook_size_min": "24",
+        "hook_size_max": "16",
+        "colors": [
+          "grey",
+          "olive"
+        ],
+        "thumbnail_url": null,
+        "is_demo": false
+      },
+      "tier": "biological_other_stage",
+      "matched_organism": {
+        "id": "278cef91-100d-5c4a-97b0-8278f7144d42",
+        "scientific_name": "Baetis",
+        "common_name": "Blue-winged olive (BWO)",
+        "taxonomic_rank": "genus",
+        "order": "Ephemeroptera",
+        "family": "Baetidae",
+        "genus": "Baetis",
+        "organism_group": "aquatic_insect",
+        "thumbnail_url": null,
+        "is_demo": false
+      },
+      "life_stage": "emerger",
+      "match_type": "general_imitation",
+      "biological_compatibility": "high",
+      "expert_verified": false,
+      "visual_similarity": null,
+      "ranking_score": 0.7105,
+      "components": {
+        "biological": 1.0,
+        "taxonomic_specificity": 1.0,
+        "life_stage": 0.1,
+        "imitation_type": 0.75,
+        "color": 0.5,
+        "visual": null
+      },
+      "reasons": [
+        "Imitación documentada de Baetis (emergente).",
+        "Imita la etapa emergente, mientras que la foto muestra ninfa.",
+        "Relación aún no verificada por un experto.",
+        "Comparte colores: olive."
+      ]
+    },
+    {
+      "fly": {
+        "id": "97ea860a-a116-5c3c-8bb3-ae1b8eab33c4",
+        "slug": "parachute-adams",
+        "name": "Parachute Adams",
+        "category": "dry_fly",
+        "imitation_type": "general_imitation",
+        "hook_size_min": "22",
+        "hook_size_max": "10",
+        "colors": [
+          "grey",
+          "brown"
+        ],
+        "thumbnail_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/56/Parachute_Adams_Dry_Fly.jpg/960px-Parachute_Adams_Dry_Fly.jpg",
+        "is_demo": false
+      },
+      "tier": "biological_other_stage",
+      "matched_organism": {
+        "id": "ee877bc1-367c-5c97-b64c-2d97f03264b4",
+        "scientific_name": "Baetidae",
+        "common_name": "Efímeras pequeñas",
+        "taxonomic_rank": "family",
+        "order": "Ephemeroptera",
+        "family": "Baetidae",
+        "genus": null,
+        "organism_group": "aquatic_insect",
+        "thumbnail_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/278754696/medium.jpg",
+        "is_demo": false
+      },
+      "life_stage": "subimago",
+      "match_type": "general_imitation",
+      "biological_compatibility": "medium",
+      "expert_verified": false,
+      "visual_similarity": null,
+      "ranking_score": 0.5105,
+      "components": {
+        "biological": 0.6,
+        "taxonomic_specificity": 0.8,
+        "life_stage": 0.1,
+        "imitation_type": 0.75,
+        "color": 0.5,
+        "visual": null
+      },
+      "reasons": [
+        "Recomendada para el grupo más amplio Baetidae.",
+        "Imita la etapa subimago (dun), mientras que la foto muestra ninfa.",
+        "Relación aún no verificada por un experto.",
+        "Comparte colores: brown."
+      ]
+    },
+    {
+      "fly": {
+        "id": "1225563e-8a03-5f50-9632-ccf6e69affb4",
+        "slug": "rusty-spinner",
+        "name": "Rusty Spinner",
+        "category": "dry_fly",
+        "imitation_type": "general_imitation",
+        "hook_size_min": "22",
+        "hook_size_max": "12",
+        "colors": [
+          "rust",
+          "brown"
+        ],
+        "thumbnail_url": null,
+        "is_demo": false
+      },
+      "tier": "biological_other_stage",
+      "matched_organism": {
+        "id": "ee877bc1-367c-5c97-b64c-2d97f03264b4",
+        "scientific_name": "Baetidae",
+        "common_name": "Efímeras pequeñas",
+        "taxonomic_rank": "family",
+        "order": "Ephemeroptera",
+        "family": "Baetidae",
+        "genus": null,
+        "organism_group": "aquatic_insect",
+        "thumbnail_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/278754696/medium.jpg",
+        "is_demo": false
+      },
+      "life_stage": "imago",
+      "match_type": "general_imitation",
+      "biological_compatibility": "medium",
+      "expert_verified": false,
+      "visual_similarity": null,
+      "ranking_score": 0.5105,
+      "components": {
+        "biological": 0.6,
+        "taxonomic_specificity": 0.8,
+        "life_stage": 0.1,
+        "imitation_type": 0.75,
+        "color": 0.5,
+        "visual": null
+      },
+      "reasons": [
+        "Recomendada para el grupo más amplio Baetidae.",
+        "Imita la etapa imago (spinner), mientras que la foto muestra ninfa.",
+        "Relación aún no verificada por un experto.",
+        "Comparte colores: brown."
+      ]
+    },
+    {
+      "fly": {
+        "id": "353745b2-75ec-5f67-bb1b-42390ae2fde5",
+        "slug": "sparkle-dun",
+        "name": "Sparkle Dun",
+        "category": "emerger",
+        "imitation_type": "general_imitation",
+        "hook_size_min": "22",
+        "hook_size_max": "12",
+        "colors": [
+          "olive",
+          "pale yellow",
+          "tan"
+        ],
+        "thumbnail_url": null,
+        "is_demo": false
+      },
+      "tier": "biological_other_stage",
+      "matched_organism": {
+        "id": "ee877bc1-367c-5c97-b64c-2d97f03264b4",
+        "scientific_name": "Baetidae",
+        "common_name": "Efímeras pequeñas",
+        "taxonomic_rank": "family",
+        "order": "Ephemeroptera",
+        "family": "Baetidae",
+        "genus": null,
+        "organism_group": "aquatic_insect",
+        "thumbnail_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/278754696/medium.jpg",
+        "is_demo": false
+      },
+      "life_stage": "emerger",
+      "match_type": "general_imitation",
+      "biological_compatibility": "medium",
+      "expert_verified": false,
+      "visual_similarity": null,
+      "ranking_score": 0.5105,
+      "components": {
+        "biological": 0.6,
+        "taxonomic_specificity": 0.8,
+        "life_stage": 0.1,
+        "imitation_type": 0.75,
+        "color": 0.5,
+        "visual": null
+      },
+      "reasons": [
+        "Recomendada para el grupo más amplio Baetidae.",
+        "Imita la etapa emergente, mientras que la foto muestra ninfa.",
+        "Relación aún no verificada por un experto.",
+        "Comparte colores: olive."
+      ]
+    },
+    {
+      "fly": {
+        "id": "8766466d-2a4e-58f0-b909-cd8653bfa204",
+        "slug": "adams",
+        "name": "Adams",
+        "category": "dry_fly",
+        "imitation_type": "general_imitation",
+        "hook_size_min": "20",
+        "hook_size_max": "10",
+        "colors": [
+          "grey",
+          "brown"
+        ],
+        "thumbnail_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b6/Standard_Adams_Dry_Fly.jpg/960px-Standard_Adams_Dry_Fly.jpg",
+        "is_demo": false
+      },
+      "tier": "biological_other_stage",
+      "matched_organism": {
+        "id": "a5739f4c-4efd-5562-b58d-23119988cbcf",
+        "scientific_name": "Ephemeroptera",
+        "common_name": "Efímeras",
+        "taxonomic_rank": "order",
+        "order": "Ephemeroptera",
+        "family": null,
+        "genus": null,
+        "organism_group": "aquatic_insect",
+        "thumbnail_url": null,
+        "is_demo": false
+      },
+      "life_stage": "subimago",
+      "match_type": "general_imitation",
+      "biological_compatibility": "medium",
+      "expert_verified": false,
+      "visual_similarity": null,
+      "ranking_score": 0.4474,
+      "components": {
+        "biological": 0.6,
+        "taxonomic_specificity": 0.3999999999999999,
+        "life_stage": 0.1,
+        "imitation_type": 0.75,
+        "color": 0.5,
+        "visual": null
+      },
+      "reasons": [
+        "Recomendada para el grupo más amplio Ephemeroptera.",
+        "Imita la etapa subimago (dun), mientras que la foto muestra ninfa.",
+        "Relación aún no verificada por un experto.",
+        "Comparte colores: brown."
+      ]
+    },
+    {
+      "fly": {
+        "id": "91fddc5c-2a87-5891-afcd-9b21d1bc5be8",
+        "slug": "comparadun",
+        "name": "Comparadun",
+        "category": "dry_fly",
+        "imitation_type": "general_imitation",
+        "hook_size_min": "22",
+        "hook_size_max": "12",
+        "colors": [
+          "various"
+        ],
+        "thumbnail_url": null,
+        "is_demo": false
+      },
+      "tier": "biological_other_stage",
+      "matched_organism": {
+        "id": "a5739f4c-4efd-5562-b58d-23119988cbcf",
+        "scientific_name": "Ephemeroptera",
+        "common_name": "Efímeras",
+        "taxonomic_rank": "order",
+        "order": "Ephemeroptera",
+        "family": null,
+        "genus": null,
+        "organism_group": "aquatic_insect",
+        "thumbnail_url": null,
+        "is_demo": false
+      },
+      "life_stage": "subimago",
+      "match_type": "general_imitation",
+      "biological_compatibility": "medium",
+      "expert_verified": false,
+      "visual_similarity": null,
+      "ranking_score": 0.4211,
+      "components": {
+        "biological": 0.6,
+        "taxonomic_specificity": 0.3999999999999999,
+        "life_stage": 0.1,
+        "imitation_type": 0.75,
+        "color": 0.0,
+        "visual": null
+      },
+      "reasons": [
+        "Recomendada para el grupo más amplio Ephemeroptera.",
+        "Imita la etapa subimago (dun), mientras que la foto muestra ninfa.",
+        "Relación aún no verificada por un experto."
+      ]
+    },
+    {
+      "fly": {
+        "id": "4c4f8f5a-61e2-54b1-a2a0-e715a8e4eae8",
+        "slug": "partridge-and-orange",
+        "name": "Partridge and Orange",
+        "category": "wet_fly",
+        "imitation_type": "suggestive_imitation",
+        "hook_size_min": "16",
+        "hook_size_max": "12",
+        "colors": [
+          "orange",
+          "brown"
+        ],
+        "thumbnail_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2c/PartridgeandOrange.jpg/960px-PartridgeandOrange.jpg",
+        "is_demo": false
+      },
+      "tier": "biological_other_stage",
+      "matched_organism": {
+        "id": "a5739f4c-4efd-5562-b58d-23119988cbcf",
+        "scientific_name": "Ephemeroptera",
+        "common_name": "Efímeras",
+        "taxonomic_rank": "order",
+        "order": "Ephemeroptera",
+        "family": null,
+        "genus": null,
+        "organism_group": "aquatic_insect",
+        "thumbnail_url": null,
+        "is_demo": false
+      },
+      "life_stage": "emerger",
+      "match_type": "suggestive_imitation",
+      "biological_compatibility": "low",
+      "expert_verified": false,
+      "visual_similarity": null,
+      "ranking_score": 0.2947,
+      "components": {
+        "biological": 0.3,
+        "taxonomic_specificity": 0.3999999999999999,
+        "life_stage": 0.1,
+        "imitation_type": 0.5,
+        "color": 0.5,
+        "visual": null
+      },
+      "reasons": [
+        "Recomendada para el grupo más amplio Ephemeroptera.",
+        "Imita la etapa emergente, mientras que la foto muestra ninfa.",
+        "Relación aún no verificada por un experto.",
+        "Comparte colores: brown."
+      ]
+    }
+  ],
+  "visually_similar_organisms": [],
+  "sources": [
+    {
+      "name": "fake",
+      "detail": "fake-vision-1",
+      "url": null
+    },
+    {
+      "name": "gbif",
+      "detail": "Baetis",
+      "url": null
+    },
+    {
+      "name": "catalog",
+      "detail": "Baetis",
+      "url": null
+    }
+  ],
+  "warnings": [
+    {
+      "code": "relations_unverified",
+      "message": "Algunas recomendaciones provienen de relaciones aún no verificadas por un experto."
+    }
+  ],
+  "analysis": {
+    "ai_provider": "fake",
+    "ai_model": "fake-vision-1",
+    "ai_available": true,
+    "embedding_model": "fake:clip",
+    "embeddings_available": true,
+    "taxonomy_available": null,
+    "duration_ms": 19,
+    "is_demo": false
+  }
+}
