@@ -1,0 +1,37 @@
+{
+  "identification_id": "96947005-f8a9-4cc7-9cae-a55ce0b51cc4",
+  "kind": "organism",
+  "match_level": "not_compatible",
+  "subject_type": "artificial_fly",
+  "image_quality": "good",
+  "primary": null,
+  "alternatives": [],
+  "life_stage": "unknown",
+  "life_stage_confidence": "none",
+  "visual_features": null,
+  "recommendations": [],
+  "visually_similar_organisms": [],
+  "sources": [
+    {
+      "name": "fake",
+      "detail": "fake-vision-1",
+      "url": null
+    }
+  ],
+  "warnings": [
+    {
+      "code": "wrong_subject_organism",
+      "message": "This looks like an artificial fly. Use 'Identify a fly' instead."
+    }
+  ],
+  "analysis": {
+    "ai_provider": "fake",
+    "ai_model": "fake-vision-1",
+    "ai_available": true,
+    "embedding_model": "fake:clip",
+    "embeddings_available": true,
+    "taxonomy_available": null,
+    "duration_ms": 18,
+    "is_demo": false
+  }
+}

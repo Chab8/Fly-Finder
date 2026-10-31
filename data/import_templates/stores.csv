@@ -1,0 +1,4 @@
+# TEMPLATE - stores. The example row is FICTITIOUS (example.com is reserved). Delete it before importing.
+# country: ISO 3166-1 alpha-2 (AR, US, GB...). currency: ISO 4217 (ARS, USD, EUR...). shipping_countries: ISO codes or WORLDWIDE.
+slug,name,website,country,currency,description,affiliate_program,shipping_countries,active,is_demo
+example-shop,EXAMPLE Fly Shop,https://example.com,AR,ARS,EXAMPLE store (fictitious).,false,AR|UY|CL,true,true

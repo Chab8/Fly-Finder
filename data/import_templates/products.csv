@@ -1,0 +1,6 @@
+# TEMPLATE - products. The example row is FICTITIOUS. Delete it before importing.
+# One row per product <-> pattern link (repeat product columns to link one product to several patterns).
+# price: only a price you verified on the store's page, in the store's currency, with last_verified_at (ISO 8601).
+# availability_status: in_stock|out_of_stock|preorder|discontinued|unknown
+store_slug,external_id,name,brand,description,product_url,affiliate_url,price,currency,availability_status,country,last_verified_at,active,is_demo,fly_slug,size,color,variant
+example-shop,EX-001,EXAMPLE Dun #14,EXAMPLE Brand,EXAMPLE product (fictitious).,https://example.com/products/ex-001,,1000.00,ARS,unknown,AR,2026-10-31T00:00:00+00:00,true,true,example-dun,14,olive,

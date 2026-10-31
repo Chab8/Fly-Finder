@@ -1,0 +1,5 @@
+# Evaluation manifest. Photos go in data/evaluation/images/ (git-ignored) and must NOT be in the catalog.
+# kind: organism | fly. expected_outcome: identified | inconclusive | not_compatible | insufficient_image
+# Leave expected_* columns empty when unknown. expected_fly_slugs: acceptable recommendations, '|' separated.
+# Add one row per photo. No rows yet: the set has to be collected (see docs/TESTING.md).
+image_path,kind,expected_outcome,expected_order,expected_family,expected_genus,expected_species,expected_pattern_slug,expected_fly_slugs

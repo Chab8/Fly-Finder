@@ -1,0 +1,39 @@
+[
+  {
+    "id": "fd0c9122-8cc1-5612-863d-e354079fdb6b",
+    "name": "EXAMPLE Woolly Bugger #8",
+    "brand": null,
+    "description": null,
+    "store": {
+      "id": "80a4461b-2a64-595f-a7ad-db11b764823a",
+      "slug": "example-shop",
+      "name": "EXAMPLE Shop (fixture)",
+      "website": "https://example.com/",
+      "country": "AR",
+      "currency": "ARS",
+      "description": null,
+      "affiliate_program": false,
+      "shipping_countries": [
+        "AR"
+      ],
+      "is_demo": true
+    },
+    "buy_url": "https://example.com/p/1",
+    "product_url": "https://example.com/p/1",
+    "price": "4500.00",
+    "currency": "ARS",
+    "availability_status": "in_stock",
+    "country": null,
+    "last_verified_at": "2026-10-30T00:00:00Z",
+    "patterns": [
+      {
+        "fly_pattern_id": "e1d5435a-717c-55bd-844e-804f7bc0ebce",
+        "size": "8",
+        "color": null,
+        "variant": null
+      }
+    ],
+    "ships_to_requested_country": true,
+    "is_demo": true
+  }
+]

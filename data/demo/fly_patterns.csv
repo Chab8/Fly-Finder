@@ -1,0 +1,4 @@
+# DEMO DATA - FICTIONAL. Loaded only when DEMO_MODE=true.
+slug,name,alternate_names,category,imitation_type,hook_size_min,hook_size_max,colors,materials,variants,habitats,fishing_environments,difficulty,description_en,description_es,usage_notes_en,usage_notes_es,data_source,verification_status,is_demo
+demo-nymph,DEMO Nymph,,nymph,general_imitation,16,12,olive,hook:DEMO hook|body:DEMO dubbing,DEMO Bead Head,freshwater_running,freshwater,beginner,Fictional pattern for the demo.,Patrón ficticio para la demo.,DEMO only.,Solo DEMO.,demo,unverified,true
+demo-dun,DEMO Dun,,dry_fly,general_imitation,18,12,olive|grey,hook:DEMO dry hook|wing:DEMO wing,,freshwater_running,freshwater,beginner,Fictional dry fly for the demo.,Seca ficticia para la demo.,DEMO only.,Solo DEMO.,demo,unverified,true

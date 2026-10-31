@@ -1,0 +1,14 @@
+# Runtime dependencies (API server). Pinned to the versions verified on 2026-10-31.
+fastapi==0.162.0
+uvicorn[standard]==0.54.0
+pydantic==2.14.2
+pydantic-settings==2.16.2
+python-multipart==0.0.33     # multipart/form-data uploads
+httpx==0.28.1                # GBIF, iNaturalist, Supabase Storage
+pillow==13.0.0               # image validation and resizing
+pillow-heif==1.8.1           # HEIC/HEIF from iPhones
+numpy==2.5.4
+google-genai==2.34.0         # Gemini API
+psycopg[binary]==3.3.6       # Supabase Postgres
+psycopg-pool==3.3.3
+pgvector==0.5.1              # vector type adapter for psycopg

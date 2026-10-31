@@ -1,0 +1,190 @@
+{
+  "id": "e1d5435a-717c-55bd-844e-804f7bc0ebce",
+  "slug": "woolly-bugger",
+  "name": "Woolly Bugger",
+  "category": "streamer",
+  "imitation_type": "suggestive_imitation",
+  "hook_size_min": "12",
+  "hook_size_max": "2",
+  "colors": [
+    "black",
+    "olive",
+    "brown"
+  ],
+  "thumbnail_url": null,
+  "is_demo": false,
+  "alternate_names": [],
+  "materials": [
+    {
+      "component": "hook",
+      "material": "Streamer hook"
+    },
+    {
+      "component": "thread",
+      "material": "Black"
+    },
+    {
+      "component": "tail",
+      "material": "Marabou"
+    },
+    {
+      "component": "body",
+      "material": "Chenille"
+    },
+    {
+      "component": "hackle",
+      "material": "Saddle hackle palmered"
+    },
+    {
+      "component": "rib",
+      "material": "Copper wire"
+    }
+  ],
+  "variants": [
+    {
+      "name": "Bead Head Woolly Bugger",
+      "description": null
+    },
+    {
+      "name": "Conehead Woolly Bugger",
+      "description": null
+    }
+  ],
+  "habitats": [
+    "freshwater_running",
+    "freshwater_still"
+  ],
+  "fishing_environments": [
+    "freshwater"
+  ],
+  "difficulty": "beginner",
+  "description": "Streamer con cola de marabú que sugiere sanguijuelas, peces forraje y cangrejos.",
+  "usage_notes": "Se recoge a tirones, se barre o se deriva.",
+  "text_language": "es",
+  "images": [],
+  "imitates": [
+    {
+      "life_stage": "nymph",
+      "match_type": "suggestive_imitation",
+      "biological_compatibility": "low",
+      "expert_verified": false,
+      "verification_source": null,
+      "notes": "Drafted from general fly-fishing references; pending expert review.",
+      "organism": {
+        "id": "3a9f7948-e0f3-59de-a96a-5d843df46457",
+        "scientific_name": "Aeshnidae",
+        "common_name": "Libélulas aeshnidas",
+        "taxonomic_rank": "family",
+        "order": "Odonata",
+        "family": "Aeshnidae",
+        "genus": null,
+        "organism_group": "aquatic_insect",
+        "thumbnail_url": null,
+        "is_demo": false
+      }
+    },
+    {
+      "life_stage": "adult",
+      "match_type": "suggestive_imitation",
+      "biological_compatibility": "medium",
+      "expert_verified": false,
+      "verification_source": null,
+      "notes": "Drafted from general fly-fishing references; pending expert review.",
+      "organism": {
+        "id": "787da47d-80e0-5c82-b897-21de4d2c81ba",
+        "scientific_name": "Cambaridae",
+        "common_name": "Cangrejos de río",
+        "taxonomic_rank": "family",
+        "order": "Decapoda",
+        "family": "Cambaridae",
+        "genus": null,
+        "organism_group": "crustacean",
+        "thumbnail_url": null,
+        "is_demo": false
+      }
+    },
+    {
+      "life_stage": "adult",
+      "match_type": "suggestive_imitation",
+      "biological_compatibility": "medium",
+      "expert_verified": false,
+      "verification_source": null,
+      "notes": "Drafted from general fly-fishing references; pending expert review.",
+      "organism": {
+        "id": "a9c7afbd-b299-5602-8288-9f1e5d17e908",
+        "scientific_name": "Parastacidae",
+        "common_name": "Cangrejos de río australes",
+        "taxonomic_rank": "family",
+        "order": "Decapoda",
+        "family": "Parastacidae",
+        "genus": null,
+        "organism_group": "crustacean",
+        "thumbnail_url": null,
+        "is_demo": false
+      }
+    },
+    {
+      "life_stage": "adult",
+      "match_type": "suggestive_imitation",
+      "biological_compatibility": "medium",
+      "expert_verified": false,
+      "verification_source": null,
+      "notes": "Drafted from general fly-fishing references; pending expert review.",
+      "organism": {
+        "id": "9adba57d-3e7b-5d50-8613-37ccf4f78a23",
+        "scientific_name": "Hirudinea",
+        "common_name": "Sanguijuelas",
+        "taxonomic_rank": "subclass",
+        "order": null,
+        "family": null,
+        "genus": null,
+        "organism_group": "annelid",
+        "thumbnail_url": null,
+        "is_demo": false
+      }
+    },
+    {
+      "life_stage": "adult",
+      "match_type": "suggestive_imitation",
+      "biological_compatibility": "medium",
+      "expert_verified": false,
+      "verification_source": null,
+      "notes": "Drafted from general fly-fishing references; pending expert review.",
+      "organism": {
+        "id": "ee2bc106-57fa-5a90-aa9c-ebc3e2997c48",
+        "scientific_name": "Cottidae",
+        "common_name": "Cótidos",
+        "taxonomic_rank": "family",
+        "order": "Scorpaeniformes",
+        "family": "Cottidae",
+        "genus": null,
+        "organism_group": "fish",
+        "thumbnail_url": null,
+        "is_demo": false
+      }
+    },
+    {
+      "life_stage": "juvenile",
+      "match_type": "suggestive_imitation",
+      "biological_compatibility": "low",
+      "expert_verified": false,
+      "verification_source": null,
+      "notes": "Drafted from general fly-fishing references; pending expert review.",
+      "organism": {
+        "id": "12f50b12-420c-53bb-801d-4031ca3020ff",
+        "scientific_name": "Salmonidae",
+        "common_name": "Salmónidos",
+        "taxonomic_rank": "family",
+        "order": "Salmoniformes",
+        "family": "Salmonidae",
+        "genus": null,
+        "organism_group": "fish",
+        "thumbnail_url": null,
+        "is_demo": false
+      }
+    }
+  ],
+  "product_count": 1,
+  "data_source": "curated_general_reference",
+  "verification_status": "unverified"
+}

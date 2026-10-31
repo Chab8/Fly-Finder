@@ -1,0 +1,5 @@
+# Visual similarity (OpenCLIP). Optional: without it the API runs with embeddings disabled.
+# torch is large (~500 MB). On Linux servers without GPU, install the CPU wheel:
+#   pip install torch --index-url https://download.pytorch.org/whl/cpu
+torch==2.15.0
+open_clip_torch==3.3.0

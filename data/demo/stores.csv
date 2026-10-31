@@ -1,0 +1,3 @@
+# DEMO DATA - FICTIONAL store. example.com is a reserved domain, not a real shop.
+slug,name,website,country,currency,description,affiliate_program,shipping_countries,active,is_demo
+demo-fly-shop,DEMO Fly Shop (fictional),https://example.com,AR,ARS,Fictional store for the demo. Not a real business.,false,AR|UY,true,true

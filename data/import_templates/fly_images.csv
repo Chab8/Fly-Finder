@@ -1,0 +1,4 @@
+# TEMPLATE - fly pattern photos. The example row is FICTITIOUS. Delete it before importing.
+# owner_key = fly slug. Commercial photos need written permission from the tyer, manufacturer or store.
+owner_key,image_url,storage_path,source,source_id,source_url,license,attribution,commercial_use_allowed,permission_status,image_view,life_stage
+example-dun,https://example.com/example-fly.jpg,,licensed_partner,EXAMPLE-2,https://example.com/example-fly,Written permission (EXAMPLE),EXAMPLE Tyer,true,pending,side,

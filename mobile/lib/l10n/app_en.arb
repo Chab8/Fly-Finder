@@ -1,0 +1,242 @@
+{
+  "@@locale": "en",
+  "homeTagline": "Match what's hatching with what's in your fly box.",
+  "identifyOrganismTitle": "Identify an organism",
+  "identifyOrganismSubtitle": "Photograph an insect, crustacean or baitfish and find flies that imitate it.",
+  "identifyFlyTitle": "Identify a fly",
+  "identifyFlySubtitle": "Photograph an artificial fly and learn what it imitates.",
+  "catalogTitle": "Catalog",
+  "catalogSubtitle": "Organisms and fly patterns",
+  "historyTitle": "History",
+  "historySubtitle": "Your recent identifications",
+  "demoBanner": "DEMO MODE · fictional data, no real identification",
+  "captureHintOrganism": "Fill the frame with the organism, in focus and well lit. A side view helps.",
+  "captureHintFly": "Place the fly on a plain background and photograph it from the side.",
+  "takePhoto": "Take photo",
+  "chooseFromGallery": "Choose from gallery",
+  "changePhoto": "Change photo",
+  "cancel": "Cancel",
+  "analyze": "Analyze photo",
+  "noPhotoSelected": "No photo selected yet",
+  "permissionDenied": "Permission to use the camera or photos was denied. You can enable it in Settings.",
+  "imageTooLargeLocal": "This photo is larger than {limit} MB. Please choose a smaller one.",
+  "@imageTooLargeLocal": {
+    "placeholders": {
+      "limit": {
+        "type": "int"
+      }
+    }
+  },
+  "unsupportedFormatLocal": "Unsupported file type. Use JPEG, PNG, WEBP or HEIC.",
+  "phaseUploading": "Sending photo",
+  "phaseAnalyzing": "Analyzing on the server",
+  "analysisNote": "AI analysis can take up to a minute.",
+  "resultOrganismTitle": "Organism result",
+  "resultFlyTitle": "Fly result",
+  "primaryIdentification": "Most likely",
+  "alternatives": "Alternatives",
+  "noIdentification": "No identification",
+  "scientificName": "Scientific name",
+  "commonName": "Common name",
+  "order": "Order",
+  "family": "Family",
+  "genus": "Genus",
+  "rank": "Rank",
+  "lifeStage": "Life stage",
+  "characteristics": "Visible features",
+  "colors": "Colours",
+  "estimatedLength": "Estimated length: {mm} mm ({reference})",
+  "@estimatedLength": {
+    "placeholders": {
+      "mm": {
+        "type": "String"
+      },
+      "reference": {
+        "type": "String"
+      }
+    }
+  },
+  "certainty": "Certainty",
+  "certaintyExplanation": "Certainty is a qualitative level from documented rules, not a percentage.",
+  "recommendedFlies": "Recommended flies",
+  "noRecommendations": "Our catalog does not document flies for this organism yet.",
+  "visualSimilarity": "Visual similarity {value}",
+  "@visualSimilarity": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "notAProbability": "Similarity and ranking scores are not probabilities.",
+  "similarOrganisms": "Visually similar in the catalog",
+  "imitates": "Imitates",
+  "imitatesNothingDocumented": "No documented organism for this pattern. It may be an attractor or general pattern.",
+  "aiSuggestions": "AI suggestions (not verified)",
+  "variants": "Variants",
+  "products": "Where to buy",
+  "noProducts": "No verified products for this pattern yet.",
+  "viewProducts": "View products",
+  "expertVerified": "Expert verified",
+  "notExpertVerified": "Not yet expert verified",
+  "inCatalog": "In catalog",
+  "notInCatalog": "Not in catalog",
+  "taxonomyVerified": "Name checked in GBIF",
+  "sources": "Sources",
+  "warnings": "Notes",
+  "retry": "Retry",
+  "backHome": "Back to home",
+  "newPhoto": "New photo",
+  "openPattern": "Open pattern",
+  "openOrganism": "Open organism",
+  "organismsTab": "Organisms",
+  "fliesTab": "Flies",
+  "searchHint": "Search by name",
+  "filterAll": "All",
+  "emptyCatalog": "The catalog is empty for now.",
+  "emptySearch": "Nothing matches your search.",
+  "noImages": "No licensed photos yet",
+  "photoCredit": "Photo: {attribution} · {license}",
+  "@photoCredit": {
+    "placeholders": {
+      "attribution": {
+        "type": "String"
+      },
+      "license": {
+        "type": "String"
+      }
+    }
+  },
+  "taxonomy": "Taxonomy",
+  "habitat": "Habitat",
+  "lifeStages": "Life stages",
+  "distribution": "Distribution",
+  "description": "Description",
+  "fishingNotes": "For anglers",
+  "materials": "Materials",
+  "hookSizes": "Hook sizes",
+  "hookRange": "#{max} – #{min}",
+  "@hookRange": {
+    "placeholders": {
+      "max": {
+        "type": "String"
+      },
+      "min": {
+        "type": "String"
+      }
+    }
+  },
+  "imitatedBy": "Imitated by",
+  "dataReviewNote": "Catalog data pending expert review.",
+  "gbifLink": "View on GBIF",
+  "productsTitle": "Products",
+  "priceNotAvailable": "Price not available",
+  "lastVerified": "Checked {date}",
+  "@lastVerified": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "shipsToYou": "Ships to your country",
+  "openStore": "Open store page",
+  "cannotOpenLink": "Could not open the link.",
+  "historyEmpty": "Your identifications will appear here.",
+  "errorNetwork": "No connection to the server. Check your internet connection.",
+  "errorTimeout": "The server took too long to answer. Please try again.",
+  "errorServer": "The server could not complete the request.",
+  "errorRateLimited": "Too many attempts. Wait a minute and try again.",
+  "errorInvalidImage": "The photo could not be read. Try another one.",
+  "errorTooLarge": "The photo is too large.",
+  "errorUnavailable": "Image analysis is temporarily unavailable. Please try again later.",
+  "errorNotFound": "Not found.",
+  "errorUnknown": "Something went wrong.",
+  "matchLevel_high_match": "High match",
+  "matchLevel_moderate_match": "Moderate match",
+  "matchLevel_low_match": "Low match",
+  "matchLevel_inconclusive": "Inconclusive",
+  "matchLevel_insufficient_image": "Photo not good enough",
+  "matchLevel_not_compatible": "Not suitable for this function",
+  "aiConfidence": "AI confidence: {level}",
+  "@aiConfidence": {
+    "placeholders": {
+      "level": {
+        "type": "String"
+      }
+    }
+  },
+  "confidence_high": "high",
+  "confidence_moderate": "moderate",
+  "confidence_low": "low",
+  "confidence_none": "none",
+  "lifeStage_egg": "Egg",
+  "lifeStage_larva": "Larva",
+  "lifeStage_nymph": "Nymph",
+  "lifeStage_pupa": "Pupa",
+  "lifeStage_emerger": "Emerger",
+  "lifeStage_subimago": "Dun (subimago)",
+  "lifeStage_imago": "Spinner (imago)",
+  "lifeStage_adult": "Adult",
+  "lifeStage_juvenile": "Juvenile",
+  "lifeStage_other": "Other",
+  "lifeStage_unknown": "Unknown",
+  "category_dry_fly": "Dry fly",
+  "category_nymph": "Nymph",
+  "category_emerger": "Emerger",
+  "category_wet_fly": "Wet fly",
+  "category_streamer": "Streamer",
+  "category_terrestrial": "Terrestrial",
+  "category_saltwater": "Saltwater",
+  "category_attractor": "Attractor",
+  "category_other": "Other",
+  "matchType_exact_imitation": "Exact imitation",
+  "matchType_general_imitation": "General imitation",
+  "matchType_suggestive_imitation": "Suggestive imitation",
+  "matchType_attractor": "Attractor",
+  "matchType_not_specified": "Not specified",
+  "compat_high": "High biological compatibility",
+  "compat_medium": "Medium biological compatibility",
+  "compat_low": "Low biological compatibility",
+  "compat_unknown": "Unknown biological compatibility",
+  "tier_biological_same_stage": "Documented for this life stage",
+  "tier_biological_stage_unknown": "Documented (stage not determined)",
+  "tier_biological_other_stage": "Documented for another life stage",
+  "tier_visual_only": "Only visually similar",
+  "group_aquatic_insect": "Aquatic insects",
+  "group_terrestrial_insect": "Terrestrial insects",
+  "group_crustacean": "Crustaceans",
+  "group_annelid": "Worms and leeches",
+  "group_mollusc": "Molluscs",
+  "group_fish": "Fish",
+  "group_other": "Other",
+  "habitat_freshwater_running": "Running water",
+  "habitat_freshwater_still": "Still water",
+  "habitat_estuarine": "Estuaries",
+  "habitat_marine": "Sea",
+  "habitat_terrestrial": "Land",
+  "availability_in_stock": "In stock",
+  "availability_out_of_stock": "Out of stock",
+  "availability_preorder": "Pre-order",
+  "availability_discontinued": "Discontinued",
+  "availability_unknown": "Availability unknown",
+  "kind_organism": "Organism",
+  "kind_fly": "Fly",
+  "kingdom": "Kingdom",
+  "phylum": "Phylum",
+  "className": "Class",
+  "species": "Species",
+  "rank_kingdom": "kingdom",
+  "rank_phylum": "phylum",
+  "rank_class": "class",
+  "rank_subclass": "subclass",
+  "rank_order": "order",
+  "rank_suborder": "suborder",
+  "rank_infraorder": "infraorder",
+  "rank_superfamily": "superfamily",
+  "rank_family": "family",
+  "rank_subfamily": "subfamily",
+  "rank_genus": "genus",
+  "rank_species": "species",
+  "rank_subspecies": "subspecies"
+}

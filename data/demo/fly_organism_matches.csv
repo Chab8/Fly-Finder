@@ -1,0 +1,4 @@
+# DEMO DATA - FICTIONAL relations between fictional records.
+organism_scientific_name,fly_slug,life_stage,match_type,biological_compatibility,expert_verified,verification_source,notes
+Demoensis ficticius,demo-nymph,nymph,general_imitation,high,false,,DEMO relation (fictional).
+Demoidae,demo-dun,subimago,general_imitation,medium,false,,DEMO relation (fictional).
