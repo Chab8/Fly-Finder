@@ -474,6 +474,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get tier_biological_other_stage => 'Documentada para otra etapa';
 
   @override
+  String get tier_related_taxon => 'Documentada para un pariente';
+
+  @override
   String get tier_visual_only => 'Solo similar visualmente';
 
   @override

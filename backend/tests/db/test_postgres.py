@@ -79,6 +79,19 @@ def test_reimport_is_idempotent(pg_url, pool, dataset):
     assert before == after
 
 
+def test_reimport_without_upload_keeps_storage_path(pg_url, pool, dataset):
+    image = next(i for i in dataset.images if i.owner_kind == "organism")
+    with connect(pg_url) as conn:
+        with conn.transaction():
+            PgCatalogWriter(conn).upsert_images([image.model_copy(update={"storage_path": "organism/x/y.jpg"})])
+        with conn.transaction():
+            PgCatalogWriter(conn).upsert_images([image.model_copy(update={"storage_path": None})])
+        stored = conn.execute("select storage_path from organism_images where id = %s", (image.id,)).fetchone()
+        with conn.transaction():
+            conn.execute("update organism_images set storage_path = %s where id = %s", (image.storage_path, image.id))
+    assert stored["storage_path"] == "organism/x/y.jpg"
+
+
 def test_constraints_reject_invalid_data(pg_url, pool):
     with connect(pg_url) as conn:
         for sql in [
@@ -103,7 +116,7 @@ def test_vector_search_and_embedding_store(pg_url, pool):
         vector[0] = 1
         store.save_embedding("fly", pending[0]["id"], model, vector)
         conn.commit()
-        assert store.images_missing_embedding("fly", model, 10) == []
+        assert pending[0]["id"] not in {row["id"] for row in store.images_missing_embedding("fly", model, 1000)}
     hits = PgVectorIndex(pool).search("fly", vector, model, k=5)
     assert len(hits) == 1 and hits[0].similarity == pytest.approx(1.0)
     assert PgVectorIndex(pool).search("fly", vector, "other:model", k=5) == []

@@ -32,10 +32,10 @@ class FakeInteractions:
         return SimpleNamespace(output_text=self.text)
 
 
-def analyzer(text=None, error=None):
+def analyzer(text=None, error=None, thinking_level=None):
     interactions = FakeInteractions(text, error)
     client = SimpleNamespace(interactions=interactions)
-    return GeminiVisionAnalyzer(api_key="test", model="gemini-test", timeout_seconds=5, client=client), interactions
+    return GeminiVisionAnalyzer(api_key="test", model="gemini-test", timeout_seconds=5, thinking_level=thinking_level, client=client), interactions
 
 
 @pytest.fixture
@@ -56,6 +56,7 @@ def test_valid_response_is_parsed_and_request_is_well_formed(image):
     assert calls.kwargs["model"] == "gemini-test"
     assert calls.kwargs["timeout"] == 5
     assert calls.kwargs["response_format"]["mime_type"] == "application/json"
+    assert "generation_config" not in calls.kwargs
     image_part = calls.kwargs["input"][1]
     assert image_part["mime_type"] == "image/jpeg"
     assert base64.b64decode(image_part["data"]) == image.jpeg_bytes
@@ -108,3 +109,16 @@ def test_provider_failures_are_classified(image, error, code):
     with pytest.raises(ProviderUnavailableError) as exc:
         gemini.analyze_organism(image)
     assert exc.value.code == code
+
+
+def test_thinking_level_is_sent_as_generation_config(image):
+    gemini, calls = analyzer(json.dumps(VALID_ORGANISM), thinking_level="low")
+    gemini.analyze_organism(image)
+    assert calls.kwargs["generation_config"] == {"thinking_level": "low"}
+
+
+def test_free_text_is_requested_in_the_user_language(image):
+    gemini, calls = analyzer(json.dumps(VALID_ORGANISM))
+    gemini.analyze_organism(image, "es")
+    prompt = calls.kwargs["input"][0]["text"]
+    assert "in Spanish" in prompt and "plain English colour words" in prompt

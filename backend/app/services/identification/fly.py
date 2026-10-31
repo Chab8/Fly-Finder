@@ -9,7 +9,7 @@ from app.models.enums import MatchType
 from app.repositories.catalog_snapshot import CatalogSnapshot
 from app.repositories.identification_store import CandidateRow
 from app.repositories.vector_index import VectorHit
-from app.schemas.ai import FlyVisionResult, SubjectType
+from app.schemas.ai import FlyFeatures, FlyVisionResult, SubjectType
 from app.schemas.identification import (
     AIImitationHint,
     EvidenceSource,
@@ -18,16 +18,24 @@ from app.schemas.identification import (
     MatchLevel,
 )
 from app.services.commerce.products import ProductService
+from app.services.i18n import color_name
 from app.services.identification.common import IdentificationContext, IdentificationPipeline, PipelineDeps
 from app.services.identification.confidence import fly_level, gate_subject, visual_only_level
 
 _MAX_CANDIDATES = 6
 
 
+def _localized_features(features: FlyFeatures, lang: str) -> FlyFeatures:
+    """The model writes colours in English (they are matched against the catalog); show them translated."""
+    return features.model_copy(update={"colors": [color_name(c, lang) for c in features.colors]})
+
+
 class FlyIdentificationService(IdentificationPipeline):
     kind = "fly"
 
-    def __init__(self, deps: PipelineDeps, products: ProductService, visual_strong_threshold: float = 0.85):
+    # OpenCLIP ViT-B-32 scores almost any tied fly 0.83-0.93 against any catalog fly photo (evaluation
+    # 2026-10-31: unrelated patterns reached 0.905), so visual evidence alone rarely justifies a pattern.
+    def __init__(self, deps: PipelineDeps, products: ProductService, visual_strong_threshold: float = 0.95):
         super().__init__(deps)
         self._products = products
         self._visual_strong = visual_strong_threshold
@@ -70,7 +78,7 @@ class FlyIdentificationService(IdentificationPipeline):
         image = self.prepare(data, ctx)
         snapshot = self.deps.snapshots.get()
         known_patterns = snapshot.fly_names()
-        vision: FlyVisionResult | None = self.run_ai(lambda: self.deps.analyzer.analyze_fly(image, known_patterns), ctx)
+        vision: FlyVisionResult | None = self.run_ai(lambda: self.deps.analyzer.analyze_fly(image, known_patterns, ctx.lang), ctx)
         vector = self.embed(image, ctx)
         if vision is None and vector is None:
             raise ProviderUnavailableError("analysis", "Image analysis is temporarily unavailable. Please try again later.", code="analysis_unavailable")
@@ -79,7 +87,7 @@ class FlyIdentificationService(IdentificationPipeline):
         response = FlyIdentificationResponse(
             identification_id=None, match_level=MatchLevel.inconclusive, subject_type=vision.subject_type if vision else None,
             image_quality=vision.image_quality if vision else None, primary=None, alternatives=[],
-            category=vision.category if vision else None, features=vision.features if vision else None,
+            category=vision.category if vision else None, features=_localized_features(vision.features, ctx.lang) if vision else None,
             is_attractor_likely=vision.is_attractor_likely if vision else False, imitates=[], ai_imitation_hints=[],
             variants=[], products=[], sources=[], warnings=[], analysis=self.analysis_info(ctx),
         )
@@ -141,7 +149,7 @@ class FlyIdentificationService(IdentificationPipeline):
                 AIImitationHint(
                     organism_group=hint.organism_group, life_stage=hint.life_stage, ai_confidence=hint.confidence,
                     catalog_organism=(
-                        snapshot.organism_summary(found, ctx.lang) if (found := snapshot.find_organism_by_name(hint.organism_group)) else None
+                        snapshot.organism_summary(found, ctx.lang) if (found := snapshot.find_organism_by_group(hint.organism_group)) else None
                     ),
                 )
                 for hint in vision.imitation_hints

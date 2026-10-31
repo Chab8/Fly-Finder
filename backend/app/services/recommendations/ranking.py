@@ -2,7 +2,9 @@
 
 Methodology (docs/AI_PIPELINE.md#ranking):
 1. Candidate flies come from documented relations (fly_organism_matches) for the
-   identified taxon AND its catalog ancestors (genus -> family -> order).
+   identified taxon AND its catalog ancestors (genus -> family -> order). Only when none
+   of them has a relation, relations of catalog relatives in the same order are used,
+   in their own tier (e.g. a dragonfly nymph named only "Anisoptera" -> Aeshnidae).
 2. Flies are grouped into tiers that are never mixed: documented relation at the
    observed life stage, at an unknown stage, at another stage, then visual-only.
    A visually similar fly never outranks a biologically documented one.
@@ -22,15 +24,16 @@ from app.models.enums import RANK_LEVEL, BiologicalCompatibility, LifeStage, Mat
 from app.repositories.catalog_snapshot import CatalogSnapshot
 from app.repositories.vector_index import VectorHit
 from app.schemas.identification import FlyRecommendation, RecommendationTier, ScoreComponents
-from app.services.i18n import stage_name, t
+from app.services.i18n import color_name, stage_name, t
 
-RANKING_VERSION = "heuristic-v0.1"
+RANKING_VERSION = "heuristic-v0.2"
 
 TIER_ORDER = {
     RecommendationTier.biological_same_stage: 0,
     RecommendationTier.biological_stage_unknown: 1,
     RecommendationTier.biological_other_stage: 2,
-    RecommendationTier.visual_only: 3,
+    RecommendationTier.related_taxon: 3,
+    RecommendationTier.visual_only: 4,
 }
 
 # Stages that are commonly confused or imitated by the same fly get partial credit.
@@ -72,9 +75,11 @@ class RankingConfig:
     stage_mismatch: float = 0.1
     specificity_step: float = 0.1     # lost per rank level between relation taxon and identified taxon
     specificity_floor: float = 0.3
-    visual_floor: float = 0.15        # cosine similarity mapped to 0 at this value...
-    visual_ceiling: float = 0.60      # ...and to 1 at this value
-    visual_only_min_similarity: float = 0.25
+    # Organism photo vs fly photo (OpenCLIP ViT-B-32) scores 0.50-0.63 even for unrelated pairs
+    # (evaluation 2026-10-31: a crayfish vs an Adams dry fly = 0.63), so the useful range starts higher.
+    visual_floor: float = 0.50        # cosine similarity mapped to 0 at this value...
+    visual_ceiling: float = 0.80      # ...and to 1 at this value
+    visual_only_min_similarity: float = 0.70
     max_results: int = 12
 
 
@@ -85,6 +90,7 @@ class RankingInput:
     observed_stage: LifeStage
     observed_colors: list[str]
     fly_visual_hits: list[VectorHit]
+    relatives: list[OrganismRecord] = field(default_factory=list)  # same order, used only without lineage relations
 
 
 def _color_families(colors: list[str]) -> set[str]:
@@ -150,6 +156,14 @@ class RecommendationEngine:
                 if current is None or self._sort_key(candidate) < self._sort_key(current):
                     best[relation.fly_pattern_id] = candidate
 
+        if not best:
+            for organism in data.relatives:
+                for relation in snapshot.relations_for_organism(organism.id):
+                    candidate = self._from_relation(snapshot, organism, relation, cfg.specificity_floor, data, visual_by_fly, lang, related=True)
+                    current = best.get(relation.fly_pattern_id)
+                    if current is None or self._sort_key(candidate) < self._sort_key(current):
+                        best[relation.fly_pattern_id] = candidate
+
         for hit in data.fly_visual_hits:
             if hit.owner_id in best or hit.similarity < cfg.visual_only_min_similarity or hit.owner_id not in snapshot.flies:
                 continue
@@ -170,11 +184,12 @@ class RecommendationEngine:
 
     def _from_relation(
         self, snapshot: CatalogSnapshot, organism: OrganismRecord, relation: MatchRecord, specificity: float,
-        data: RankingInput, visual_by_fly: dict[uuid.UUID, float], lang: str,
+        data: RankingInput, visual_by_fly: dict[uuid.UUID, float], lang: str, related: bool = False,
     ) -> FlyRecommendation:
         cfg = self.config
         fly = snapshot.flies[relation.fly_pattern_id]
-        stage_value, tier = stage_score(cfg, data.observed_stage, relation.life_stage)
+        stage_value, stage_tier = stage_score(cfg, data.observed_stage, relation.life_stage)
+        tier = RecommendationTier.related_taxon if related else stage_tier
         color_value, shared_colors = color_overlap(data.observed_colors, fly)
         similarity = visual_by_fly.get(fly.id)
         components = ScoreComponents(
@@ -186,20 +201,21 @@ class RecommendationEngine:
             visual=visual_component(cfg, similarity),
         )
         organism_label = organism.scientific_name
-        reasons = [
-            t("reason_relation", lang, organism=organism_label, stage=stage_name(relation.life_stage.value, lang))
-            if organism is data.lineage[0]
-            else t("reason_broader_group", lang, organism=organism_label),
-        ]
-        if tier == RecommendationTier.biological_same_stage:
+        if related:
+            reasons = [t("reason_related_taxon", lang, organism=organism_label, order=organism.order or "-")]
+        elif organism is data.lineage[0]:
+            reasons = [t("reason_relation", lang, organism=organism_label, stage=stage_name(relation.life_stage.value, lang))]
+        else:
+            reasons = [t("reason_broader_group", lang, organism=organism_label)]
+        if stage_tier == RecommendationTier.biological_same_stage:
             reasons.append(t("reason_same_stage", lang))
-        elif tier == RecommendationTier.biological_other_stage:
+        elif stage_tier == RecommendationTier.biological_other_stage:
             reasons.append(t("reason_other_stage", lang, stage=stage_name(relation.life_stage.value, lang), observed=stage_name(data.observed_stage.value, lang)))
         reasons.append(
             t("reason_expert_verified", lang, source=relation.verification_source) if relation.expert_verified else t("reason_unverified", lang)
         )
         if shared_colors:
-            reasons.append(t("reason_colors", lang, colors=", ".join(shared_colors)))
+            reasons.append(t("reason_colors", lang, colors=", ".join(color_name(c, lang) for c in shared_colors)))
         if similarity is not None:
             reasons.append(t("reason_visual", lang, similarity=f"{similarity:.2f}"))
         return FlyRecommendation(

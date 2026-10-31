@@ -37,7 +37,7 @@ class DemoVisionAnalyzer:
     def available(self) -> bool:
         return True
 
-    def analyze_organism(self, image: ProcessedImage) -> OrganismVisionResult:
+    def analyze_organism(self, image: ProcessedImage, lang: str = "en") -> OrganismVisionResult:
         if _is_dark(image):
             return OrganismVisionResult(
                 subject_type=SubjectType.no_clear_subject, image_quality=ImageQuality.unusable,
@@ -63,7 +63,7 @@ class DemoVisionAnalyzer:
             morphological_features=["DEMO: three tails", "DEMO: gills on abdomen"],
         )
 
-    def analyze_fly(self, image: ProcessedImage, known_patterns: list[str]) -> FlyVisionResult:
+    def analyze_fly(self, image: ProcessedImage, known_patterns: list[str], lang: str = "en") -> FlyVisionResult:
         if _is_dark(image):
             return FlyVisionResult(
                 subject_type=SubjectType.no_clear_subject, image_quality=ImageQuality.unusable,

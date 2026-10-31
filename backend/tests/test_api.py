@@ -102,7 +102,9 @@ def test_upload_size_limit(client_for):
 def test_rate_limit(client_for):
     client = client_for(rate_limit=2)
     assert [upload(client, headers={"X-Client-Id": CLIENT_ID}).status_code for _ in range(3)] == [200, 200, 429]
-    assert upload(client, headers={"X-Client-Id": CLIENT_ID}).json()["error"]["details"]["retry_after_seconds"] > 0
+    limited = upload(client, headers={"X-Client-Id": CLIENT_ID})
+    assert limited.json()["error"]["details"]["retry_after_seconds"] > 0
+    assert int(limited.headers["Retry-After"]) == limited.json()["error"]["details"]["retry_after_seconds"]
 
 
 def test_everything_down_returns_503(client_for):

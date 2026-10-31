@@ -16,9 +16,9 @@ class VisionAnalyzer(Protocol):
     @property
     def available(self) -> bool: ...
 
-    def analyze_organism(self, image: ProcessedImage) -> OrganismVisionResult: ...
+    def analyze_organism(self, image: ProcessedImage, lang: str = "en") -> OrganismVisionResult: ...
 
-    def analyze_fly(self, image: ProcessedImage, known_patterns: list[str]) -> FlyVisionResult: ...
+    def analyze_fly(self, image: ProcessedImage, known_patterns: list[str], lang: str = "en") -> FlyVisionResult: ...
 
 
 class UnconfiguredVisionAnalyzer:
@@ -36,8 +36,8 @@ class UnconfiguredVisionAnalyzer:
     def _fail(self):
         raise ProviderUnavailableError("gemini", "AI analysis is not configured on the server.", code="ai_not_configured")
 
-    def analyze_organism(self, image: ProcessedImage) -> OrganismVisionResult:
+    def analyze_organism(self, image: ProcessedImage, lang: str = "en") -> OrganismVisionResult:
         self._fail()
 
-    def analyze_fly(self, image: ProcessedImage, known_patterns: list[str]) -> FlyVisionResult:
+    def analyze_fly(self, image: ProcessedImage, known_patterns: list[str], lang: str = "en") -> FlyVisionResult:
         self._fail()

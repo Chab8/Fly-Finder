@@ -1,0 +1,260 @@
+{
+  "photos": 22,
+  "order_accuracy": "13/13 (100%)",
+  "family_accuracy": "6/13 (46%)",
+  "genus_accuracy": "1/1 (100%)",
+  "species_accuracy": "n/a",
+  "pattern_top1_accuracy": "5/7 (71%)",
+  "pattern_top3_accuracy": "7/7 (100%)",
+  "recommendation_top3_hit_rate": "11/13 (85%)",
+  "correct_abstentions": "2/2 (100%)",
+  "abstained_on_identifiable_photos": 0,
+  "api_errors": 0,
+  "ai_unavailable": 0,
+  "details": [
+    {
+      "image": "images/organisms/baetidae_nymph_1.jpg",
+      "match_level": "high_match",
+      "primary": "Ephemeroptera",
+      "life_stage": "nymph",
+      "top3": [
+        "hares-ear-nymph",
+        "pheasant-tail-nymph",
+        "frenchie"
+      ],
+      "ai_available": true,
+      "duration_ms": 8997
+    },
+    {
+      "image": "images/organisms/heptageniidae_nymph_1.jpg",
+      "match_level": "high_match",
+      "primary": "Ephemeroptera",
+      "life_stage": "larva",
+      "top3": [
+        "hares-ear-nymph",
+        "pheasant-tail-nymph",
+        "sparkle-dun"
+      ],
+      "ai_available": true,
+      "duration_ms": 4844
+    },
+    {
+      "image": "images/organisms/perlidae_nymph_0.jpg",
+      "match_level": "high_match",
+      "primary": "Plecoptera",
+      "life_stage": "nymph",
+      "top3": [
+        "kaufmanns-stone",
+        "pats-rubber-legs",
+        "prince-nymph"
+      ],
+      "ai_available": true,
+      "duration_ms": 6016
+    },
+    {
+      "image": "images/organisms/hydropsychidae_larva_0.jpg",
+      "match_level": "moderate_match",
+      "primary": "Rhyacophilidae",
+      "life_stage": "larva",
+      "top3": [
+        "czech-nymph",
+        "sparkle-pupa",
+        "cdc-and-elk"
+      ],
+      "ai_available": true,
+      "duration_ms": 6881
+    },
+    {
+      "image": "images/organisms/limnephilidae_larva_0.jpg",
+      "match_level": "high_match",
+      "primary": "Trichoptera",
+      "life_stage": "larva",
+      "top3": [
+        "cdc-and-elk",
+        "sparkle-pupa",
+        "x-caddis"
+      ],
+      "ai_available": true,
+      "duration_ms": 6476
+    },
+    {
+      "image": "images/organisms/chironomidae_larva_1.jpg",
+      "match_level": "moderate_match",
+      "primary": "Ceratopogonidae",
+      "life_stage": "larva",
+      "top3": [
+        "bloodworm",
+        "brassie",
+        "walts-worm"
+      ],
+      "ai_available": true,
+      "duration_ms": 4285
+    },
+    {
+      "image": "images/organisms/ephemeridae_adult_1.jpg",
+      "match_level": "high_match",
+      "primary": "Ephemeroptera",
+      "life_stage": "imago",
+      "top3": [
+        "rusty-spinner",
+        "adams",
+        "comparadun"
+      ],
+      "ai_available": true,
+      "duration_ms": 3978
+    },
+    {
+      "image": "images/organisms/aeshnidae_nymph_0.jpg",
+      "match_level": "high_match",
+      "primary": "Aeshnidae",
+      "life_stage": "nymph",
+      "top3": [
+        "dragonfly-nymph",
+        "woolly-bugger"
+      ],
+      "ai_available": true,
+      "duration_ms": 5431
+    },
+    {
+      "image": "images/organisms/acrididae_adult_0.jpg",
+      "match_level": "high_match",
+      "primary": "Acrididae",
+      "life_stage": "adult",
+      "top3": [
+        "daves-hopper",
+        "chubby-chernobyl",
+        "chernobyl-ant"
+      ],
+      "ai_available": true,
+      "duration_ms": 4204
+    },
+    {
+      "image": "images/organisms/formicidae_adult_0.jpg",
+      "match_level": "high_match",
+      "primary": "Formicidae",
+      "life_stage": "adult",
+      "top3": [
+        "parachute-ant",
+        "chernobyl-ant"
+      ],
+      "ai_available": true,
+      "duration_ms": 4770
+    },
+    {
+      "image": "images/organisms/cambaridae_1.jpg",
+      "match_level": "high_match",
+      "primary": "Cambaridae",
+      "life_stage": "adult",
+      "top3": [
+        "woolly-bugger"
+      ],
+      "ai_available": true,
+      "duration_ms": 5762
+    },
+    {
+      "image": "images/organisms/gammarus_0.jpg",
+      "match_level": "high_match",
+      "primary": "Gammarus",
+      "life_stage": "adult",
+      "top3": [
+        "scud"
+      ],
+      "ai_available": true,
+      "duration_ms": 5107
+    },
+    {
+      "image": "images/organisms/cottidae_1.jpg",
+      "match_level": "high_match",
+      "primary": "Cottus",
+      "life_stage": "adult",
+      "top3": [
+        "muddler-minnow",
+        "zonker",
+        "woolly-bugger"
+      ],
+      "ai_available": true,
+      "duration_ms": 6037
+    },
+    {
+      "image": "images/organisms/raccoon_control.jpg",
+      "match_level": "not_compatible",
+      "primary": null,
+      "life_stage": "unknown",
+      "top3": [],
+      "ai_available": true,
+      "duration_ms": 3439
+    },
+    {
+      "image": "images/organisms/blurred_control.jpg",
+      "match_level": "insufficient_image",
+      "primary": null,
+      "life_stage": "unknown",
+      "top3": [],
+      "ai_available": true,
+      "duration_ms": 2939
+    },
+    {
+      "image": "images/flies/adams.jpg",
+      "match_level": "high_match",
+      "primary": "adams",
+      "life_stage": null,
+      "top3": [],
+      "ai_available": true,
+      "duration_ms": 4346
+    },
+    {
+      "image": "images/flies/crazy-charlie.jpg",
+      "match_level": "high_match",
+      "primary": "balanced-leech",
+      "life_stage": null,
+      "top3": [],
+      "ai_available": true,
+      "duration_ms": 3678
+    },
+    {
+      "image": "images/flies/elk-hair-caddis.jpg",
+      "match_level": "high_match",
+      "primary": "elk-hair-caddis",
+      "life_stage": null,
+      "top3": [],
+      "ai_available": true,
+      "duration_ms": 3975
+    },
+    {
+      "image": "images/flies/muddler-minnow.jpg",
+      "match_level": "high_match",
+      "primary": "royal-wulff",
+      "life_stage": null,
+      "top3": [],
+      "ai_available": true,
+      "duration_ms": 3968
+    },
+    {
+      "image": "images/flies/royal-wulff.jpg",
+      "match_level": "high_match",
+      "primary": "royal-wulff",
+      "life_stage": null,
+      "top3": [],
+      "ai_available": true,
+      "duration_ms": 3932
+    },
+    {
+      "image": "images/flies/stimulator.jpg",
+      "match_level": "high_match",
+      "primary": "stimulator",
+      "life_stage": null,
+      "top3": [],
+      "ai_available": true,
+      "duration_ms": 4047
+    },
+    {
+      "image": "images/flies/woolly-bugger.jpg",
+      "match_level": "high_match",
+      "primary": "woolly-bugger",
+      "life_stage": null,
+      "top3": [],
+      "ai_available": true,
+      "duration_ms": 4029
+    }
+  ]
+}

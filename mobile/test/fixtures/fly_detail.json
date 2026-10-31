@@ -11,7 +11,7 @@
     "olive",
     "brown"
   ],
-  "thumbnail_url": null,
+  "thumbnail_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/81/Black_Woolly_Bugger_by_James_Stripes.jpg/960px-Black_Woolly_Bugger_by_James_Stripes.jpg",
   "is_demo": false,
   "alternate_names": [],
   "materials": [
@@ -61,7 +61,18 @@
   "description": "Streamer con cola de marabú que sugiere sanguijuelas, peces forraje y cangrejos.",
   "usage_notes": "Se recoge a tirones, se barre o se deriva.",
   "text_language": "es",
-  "images": [],
+  "images": [
+    {
+      "id": "05cc8bf4-ef79-5215-afed-5519e4cf9884",
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/81/Black_Woolly_Bugger_by_James_Stripes.jpg/960px-Black_Woolly_Bugger_by_James_Stripes.jpg",
+      "source": "wikimedia_commons",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Black_Woolly_Bugger_by_James_Stripes.jpg",
+      "license": "CC BY 2.5",
+      "attribution": "JStripes at English Wikipedia, CC BY 2.5, via Wikimedia Commons",
+      "image_view": null,
+      "life_stage": null
+    }
+  ],
   "imitates": [
     {
       "life_stage": "nymph",
@@ -79,7 +90,7 @@
         "family": "Aeshnidae",
         "genus": null,
         "organism_group": "aquatic_insect",
-        "thumbnail_url": null,
+        "thumbnail_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/154883429/medium.jpeg",
         "is_demo": false
       }
     },
@@ -99,7 +110,7 @@
         "family": "Cambaridae",
         "genus": null,
         "organism_group": "crustacean",
-        "thumbnail_url": null,
+        "thumbnail_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/481301446/medium.jpg",
         "is_demo": false
       }
     },
@@ -159,7 +170,7 @@
         "family": "Cottidae",
         "genus": null,
         "organism_group": "fish",
-        "thumbnail_url": null,
+        "thumbnail_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/320896301/medium.jpg",
         "is_demo": false
       }
     },
@@ -179,7 +190,7 @@
         "family": "Salmonidae",
         "genus": null,
         "organism_group": "fish",
-        "thumbnail_url": null,
+        "thumbnail_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/344916678/medium.jpeg",
         "is_demo": false
       }
     }

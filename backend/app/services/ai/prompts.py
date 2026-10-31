@@ -19,7 +19,10 @@ Rules:
   size_reference. Otherwise leave both null.
 - If you cannot identify the organism, return an empty candidates list and explain why
   in cannot_identify_reason.
-- Write all free-text fields in English.
+- Write descriptive free text (visual_evidence, morphological_features, image_quality_issues,
+  habitat_hint, cannot_identify_reason) in {language}. Keep scientific names as they are and
+  write `colors` as plain English colour words (e.g. "olive", "brown"): they are matched
+  against fly colours.
 """
 
 FLY_PROMPT = """\
@@ -40,5 +43,10 @@ Rules:
   "Trichoptera", "Chironomidae", "baitfish", "shrimp", "crab", "leech"), with life stage.
   Leave empty for pure attractors.
 - If the fly cannot be identified, return empty candidates and explain in cannot_identify_reason.
-- Write all free-text fields in English.
+- Write descriptive free text (feature descriptions, visible_materials, visual_evidence,
+  image_quality_issues, cannot_identify_reason) in {language}. Keep pattern names in their
+  usual form, organism_group as a scientific or plain English group name, and `colors` as plain
+  English colour words.
 """
+
+LANGUAGE_NAMES = {"en": "English", "es": "Spanish"}

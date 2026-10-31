@@ -57,9 +57,18 @@ Todos los scripts que escriben son **dry-run por defecto** y escriben en una sol
 ## Fotos de iNaturalist
 
 ```bash
-backend/.venv/bin/python scripts/fetch_inaturalist_photos.py --per-taxon 5 --only Baetidae Chironomidae
+backend/.venv/bin/python scripts/fetch_inaturalist_photos.py --per-taxon 3 --life-stage nymph --only Baetidae Perlidae
 ```
-Escribe `data/review/organism_images_candidates.csv` con fotos CC0/CC BY/CC BY-SA de observaciones de grado investigación, todas `pending`. Para cada fila: abrí `source_url`, confirmá que la foto muestra ese taxón, completá `life_stage` e `image_view`, cambiá a `approved` y copiala a `data/catalog/organism_images.csv`.
+Escribe `data/review/organism_images_candidates.csv` (o el archivo de `--out`) con fotos CC0/CC BY/CC BY-SA de observaciones de grado investigación, una por observación, todas `pending`.
+
+- `--life-stage` (`nymph`, `larva`, `pupa`, `adult`, `subimago`, `juvenile`, `egg`) usa la anotación de estadio de la comunidad de iNaturalist y precompleta `life_stage`. Para efímeras, "adult" se guarda como `imago`. Los taxones cuyo registro no tiene ese estadio se saltean.
+- El cliente respeta 1 solicitud por segundo y reintenta los cortes de conexión y las respuestas 429/5xx.
+
+Para cada fila: abrí la foto, confirmá que muestra ese taxón y ese estadio (descartá mudas/exuvias, capturas de pantalla, fotos donde el animal es diminuto y errores de la observación: en la revisión de 2026-10-31 aparecieron un ganso cargado como *Gammarus* y una trucha como Galaxiidae), cambiá a `approved` y copiala a `data/catalog/organism_images.csv`.
+
+## Fotos de Wikimedia Commons
+
+Commons tiene fotos de patrones clásicos con licencia libre por archivo. Usá la API (`action=query&prop=imageinfo&iiprop=url|extmetadata`) y quedate solo con `LicenseShortName` CC0, dominio público, CC BY o CC BY-SA. Wikimedia responde 403 si el User-Agent no trae un contacto real: `EXTERNAL_USER_AGENT` ya incluye la URL del proyecto. Guardá cada foto en `data/catalog/fly_images.csv` con `source=wikimedia_commons`, `source_id` = título del archivo, `source_url` = página del archivo y la atribución "Autor, licencia, via Wikimedia Commons". Descartá variantes con nombre propio (Adams Wulff, Crystal Stimulator) salvo que el catálogo tenga ese patrón.
 
 ## Estado del catálogo semilla (2026-10-31)
 
@@ -68,7 +77,8 @@ Escribe `data/review/organism_images_candidates.csv` con fotos CC0/CC BY/CC BY-S
 | Organismos / taxones | 52 (efímeras, tricópteros, plecópteros, dípteros, odonatos, terrestres, crustáceos, anélidos, peces forraje) | 50 verificados contra GBIF. Textos y notas de pesca redactados a partir de referencias generales, **sin revisión experta** |
 | Patrones de moscas | 69 (secas, ninfas, emergentes, streamers, terrestres, agua salada, atractores) | `unverified`: materiales y rangos de anzuelo son los publicados habitualmente; requieren revisión de un atador |
 | Relaciones organismo↔mosca | 127 | Todas `expert_verified=false`, con la nota "pendiente de revisión experta" |
-| Fotos | 0 | Faltan fotos autorizadas (ver [IMAGE_LICENSES.md](IMAGE_LICENSES.md)) |
+| Fotos de organismos | 89 de 37 taxones | iNaturalist (CC0/CC BY/CC BY-SA), revisadas una por una a ojo (taxón plausible, estadio, sujeto visible). **No es revisión experta** |
+| Fotos de moscas | 21 de 14 patrones | Wikimedia Commons (dominio público/CC BY/CC BY-SA). Faltan 55 patrones: hacen falta fotos propias o con permiso |
 | Tiendas y productos | 0 | No se inventaron. Cargalos con la plantilla cuando tengas datos verificados |
 
 Deliberadamente **no** se completaron tamaños ni distribución geográfica: no hay una fuente citada todavía.

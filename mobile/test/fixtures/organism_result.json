@@ -1,5 +1,5 @@
 {
-  "identification_id": "1a7a622d-202b-4b41-966d-0f6a7a166246",
+  "identification_id": "c753d394-a3ab-424d-8842-16a1aae9231f",
   "kind": "organism",
   "match_level": "high_match",
   "subject_type": "real_organism",
@@ -67,7 +67,7 @@
         "family": "Heptageniidae",
         "genus": null,
         "organism_group": "aquatic_insect",
-        "thumbnail_url": null,
+        "thumbnail_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/405643633/medium.jpg",
         "is_demo": false
       },
       "in_catalog": true
@@ -102,7 +102,7 @@
           "brown",
           "copper"
         ],
-        "thumbnail_url": null,
+        "thumbnail_url": "https://upload.wikimedia.org/wikipedia/commons/8/83/Pheasant_Tail_Nymph.jpg",
         "is_demo": false
       },
       "tier": "biological_same_stage",
@@ -152,7 +152,7 @@
           "tan",
           "brown"
         ],
-        "thumbnail_url": null,
+        "thumbnail_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b5/Gold_ribbed_hairs_ear_trout_fly.JPG/960px-Gold_ribbed_hairs_ear_trout_fly.JPG",
         "is_demo": false
       },
       "tier": "biological_same_stage",
@@ -400,7 +400,7 @@
           "grey",
           "brown"
         ],
-        "thumbnail_url": null,
+        "thumbnail_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/56/Parachute_Adams_Dry_Fly.jpg/960px-Parachute_Adams_Dry_Fly.jpg",
         "is_demo": false
       },
       "tier": "biological_other_stage",
@@ -413,7 +413,7 @@
         "family": "Baetidae",
         "genus": null,
         "organism_group": "aquatic_insect",
-        "thumbnail_url": null,
+        "thumbnail_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/278754696/medium.jpg",
         "is_demo": false
       },
       "life_stage": "subimago",
@@ -463,7 +463,7 @@
         "family": "Baetidae",
         "genus": null,
         "organism_group": "aquatic_insect",
-        "thumbnail_url": null,
+        "thumbnail_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/278754696/medium.jpg",
         "is_demo": false
       },
       "life_stage": "imago",
@@ -514,7 +514,7 @@
         "family": "Baetidae",
         "genus": null,
         "organism_group": "aquatic_insect",
-        "thumbnail_url": null,
+        "thumbnail_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/278754696/medium.jpg",
         "is_demo": false
       },
       "life_stage": "emerger",
@@ -551,7 +551,7 @@
           "grey",
           "brown"
         ],
-        "thumbnail_url": null,
+        "thumbnail_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b6/Standard_Adams_Dry_Fly.jpg/960px-Standard_Adams_Dry_Fly.jpg",
         "is_demo": false
       },
       "tier": "biological_other_stage",
@@ -649,7 +649,7 @@
           "orange",
           "brown"
         ],
-        "thumbnail_url": null,
+        "thumbnail_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2c/PartridgeandOrange.jpg/960px-PartridgeandOrange.jpg",
         "is_demo": false
       },
       "tier": "biological_other_stage",
@@ -718,7 +718,7 @@
     "embedding_model": "fake:clip",
     "embeddings_available": true,
     "taxonomy_available": null,
-    "duration_ms": 22,
+    "duration_ms": 19,
     "is_demo": false
   }
 }

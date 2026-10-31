@@ -202,6 +202,7 @@
   "tier_biological_same_stage": "Documented for this life stage",
   "tier_biological_stage_unknown": "Documented (stage not determined)",
   "tier_biological_other_stage": "Documented for another life stage",
+  "tier_related_taxon": "Documented for a relative",
   "tier_visual_only": "Only visually similar",
   "group_aquatic_insect": "Aquatic insects",
   "group_terrestrial_insect": "Terrestrial insects",

@@ -101,3 +101,9 @@ def test_snapshot_provider_refreshes_and_survives_failed_refresh():
     assert second is not first and calls["n"] == 2
     now["t"] = 30
     assert provider.get() is second  # refresh failed: previous snapshot is kept
+
+
+def test_ai_group_hints_resolve_through_common_names(snapshot):
+    assert snapshot.find_organism_by_group("Trichoptera").scientific_name == "Trichoptera"
+    assert snapshot.find_organism_by_group("leech").scientific_name == "Hirudinea"
+    assert snapshot.find_organism_by_name("leech") is None  # taxonomy lookups stay strict

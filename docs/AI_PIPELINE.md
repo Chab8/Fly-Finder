@@ -43,13 +43,14 @@ Reglas en `services/identification/confidence.py`. No hay porcentajes.
 
 ## Ranking de moscas (Función A)
 
-`services/recommendations/ranking.py`, versión `heuristic-v0.1`.
+`services/recommendations/ranking.py`, versión `heuristic-v0.2` (v0.2, 2026-10-31: umbrales visuales recalibrados con el set de evaluación).
 
 **Niveles (nunca se mezclan, en este orden):**
 1. Relación documentada para la etapa observada.
 2. Relación documentada, etapa no determinada.
 3. Relación documentada para otra etapa.
-4. Solo similitud visual (≥0,25), sin relación biológica. Siempre al final.
+4. Pariente del mismo orden: **solo** si ni el taxón identificado ni sus ancestros tienen relaciones en el catálogo, se usan las de los organismos del catálogo del mismo orden (p. ej. una ninfa identificada solo como "Anisoptera" recibe las moscas de Aeshnidae y Coenagrionidae). Especificidad fija en el mínimo (0,3) y el motivo lo dice.
+5. Solo similitud visual (≥0,70), sin relación biológica. Siempre al final. Con 0,25 aparecían moscas sin relación: una foto de cangrejo de río da 0,63 contra una Adams seca.
 
 **Dentro de cada nivel**, promedio ponderado de los componentes disponibles (los ausentes no penalizan):
 
@@ -60,7 +61,7 @@ Reglas en `services/identification/confidence.py`. No hay porcentajes.
 | Especificidad taxonómica | 0,15 | 1 − 0,1 por cada nivel entre el taxón identificado y el de la relación (mín. 0,3) |
 | Tipo de imitación | 0,10 | exacta 1 · general 0,75 · sugestiva 0,5 · sin especificar 0,4 · atractor 0,3 |
 | Color | 0,05 | proporción de familias de color compartidas |
-| Similitud visual | 0,05 | coseno reescalado de 0,15–0,60 a 0–1 |
+| Similitud visual | 0,05 | coseno reescalado de 0,50–0,80 a 0–1 (por debajo de 0,50 vale 0: foto de organismo contra foto de mosca da 0,50–0,63 aunque no se parezcan) |
 
 > **Estos pesos son heurísticas experimentales**, no verdades científicas. Deben calibrarse con el set de evaluación ([TESTING.md](TESTING.md)). Se cambian en `RankingConfig` sin tocar el resto.
 
@@ -72,8 +73,21 @@ Reglas en `services/identification/confidence.py`. No hay porcentajes.
 
 | Uso | Modelo | Licencia / notas |
 |---|---|---|
-| Visión | `gemini-3.8-flash` (variable `GEMINI_MODEL`) | Verificado en ai.google.dev el 2026-10-31 como modelo estable recomendado. Alternativa más barata: `gemini-3.5-flash-lite`. |
+| Visión | `gemini-3.8-flash` (variable `GEMINI_MODEL`) | Verificado en ai.google.dev el 2026-10-31 como modelo estable recomendado. Alternativa más rápida y barata: `gemini-3.5-flash-lite`. Razonamiento con `GEMINI_THINKING_LEVEL` (por defecto `low`). |
 | Embeddings | OpenCLIP `ViT-B-32` + `laion2b_s34b_b79k` | Código MIT; pesos MIT (tarjeta de Hugging Face `laion/CLIP-ViT-B-32-laion2B-s34B-b79K`). 512 dimensiones = columnas `vector(512)`. Liviano para CPU. |
+
+### Medición con Gemini real (2026-10-31, set de evaluación de 22 fotos)
+
+| | `gemini-3.8-flash` | `gemini-3.5-flash-lite` |
+|---|---|---|
+| Tiempo por foto | 23–112 s (mediana ~80 s); hasta 51 s para responder solo "ok" | 3–10 s |
+| Familia correcta (9 primeras fotos de organismos) | 8/9 (llega a subfamilia o género cuando puede) | 2/9 (casi siempre se queda en el orden) |
+| Orden correcto | 9/9 | 13/13 |
+| Patrón de mosca top-1 / top-3 | sin medir (la corrida se cortó) | 5–6/7 / 7/7 |
+| Moscas recomendadas correctas en el top 3 | — | 11/13 |
+| Controles (mapache → no compatible; foto borrosa → insuficiente) | — | 2/2 |
+
+Con `GEMINI_TIMEOUT_SECONDS=45`, Flash se corta seguido y la app cae a "solo similitud visual". La latencia de Flash fue alta incluso para un texto de una palabra, así que no depende de la foto ni del prompt; puede ser carga del servicio o del nivel gratuito. Flash-Lite varía entre corridas (la misma foto puede quedar en familia u orden) y a veces afirma con certeza alta un patrón equivocado (Muddler → Royal Wulff, Crazy Charlie → Balanced Leech). Repetir la medición con `scripts/evaluate.py` al cambiar de modelo o de nivel de cuenta.
 
 Cambiar el modelo de embeddings requiere: nueva fila en `model_versions`, migración si cambia la dimensión, y correr `scripts/generate_embeddings.py`. Los vectores de modelos distintos nunca se comparan (la búsqueda filtra por `embedding_model`).
 
@@ -84,7 +98,8 @@ Cambiar el modelo de embeddings requiere: nueva fila en `model_versions`, migrac
 ## Limitaciones conocidas
 
 - Identificar especies por foto es poco confiable para la mayoría de los insectos acuáticos; el sistema lo advierte y prefiere familia o género.
-- Gemini escribe los textos libres (rasgos, evidencia) en inglés; los colores se comparan con un mapa de familias de color en inglés.
-- El catálogo aún no tiene fotos con licencia, así que la búsqueda visual devuelve vacío hasta cargarlas y generar embeddings.
+- Gemini escribe los textos libres (rasgos, evidencia, materiales) en el idioma del usuario, pero los colores siempre en inglés: se comparan con un mapa de familias de color y se traducen al mostrarlos (`services/i18n.py`, `COLORS_ES`).
+- Hay 89 fotos de organismos (37 taxones) y 21 de moscas (14 de 69 patrones), con embeddings en Supabase. La búsqueda visual solo puede sugerir lo que tiene fotos.
+- OpenCLIP ViT-B-32 casi no distingue patrones de moscas entre sí: cualquier mosca atada da 0,83–0,93 contra cualquier foto del catálogo (en la evaluación, una Woolly Bugger dio 0,905 contra una Parachute Adams y 0,871 contra la Woolly Bugger). Por eso, sin IA, una mosca necesita ≥0,95 para pasar de `inconclusive` a `low_match`, y la similitud visual nunca sube el nivel de una identificación.
 - Ninguna relación organismo↔mosca está verificada por un experto todavía (todas `expert_verified=false`).
 - La similitud de OpenCLIP entre una foto de insecto y una foto de mosca artificial es una señal débil; por eso pesa 5 %.

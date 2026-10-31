@@ -144,6 +144,7 @@
   "tier_biological_same_stage": "Documentada para esta etapa",
   "tier_biological_stage_unknown": "Documentada (etapa no determinada)",
   "tier_biological_other_stage": "Documentada para otra etapa",
+  "tier_related_taxon": "Documentada para un pariente",
   "tier_visual_only": "Solo similar visualmente",
   "group_aquatic_insect": "Insectos acuáticos",
   "group_terrestrial_insect": "Insectos terrestres",

@@ -100,6 +100,9 @@ class RecommendationTier(str, Enum):
     biological_same_stage = "biological_same_stage"
     biological_stage_unknown = "biological_stage_unknown"
     biological_other_stage = "biological_other_stage"
+    # Documented for another catalog taxon of the same order: used only when the identified
+    # taxon and its ancestors have no relation in the catalog.
+    related_taxon = "related_taxon"
     visual_only = "visual_only"
 
 

@@ -91,7 +91,7 @@ def build_analyzer(settings: Settings) -> VisionAnalyzer:
     if settings.gemini_api_key:
         return GeminiVisionAnalyzer(
             api_key=settings.gemini_api_key.get_secret_value(), model=settings.gemini_model,
-            timeout_seconds=settings.gemini_timeout_seconds,
+            timeout_seconds=settings.gemini_timeout_seconds, thinking_level=settings.gemini_thinking_level,
         )
     return UnconfiguredVisionAnalyzer(settings.gemini_model)
 

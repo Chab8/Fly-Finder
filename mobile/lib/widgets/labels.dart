@@ -99,6 +99,7 @@ extension CodeLabels on AppLocalizations {
         'biological_same_stage' => tier_biological_same_stage,
         'biological_stage_unknown' => tier_biological_stage_unknown,
         'biological_other_stage' => tier_biological_other_stage,
+        'related_taxon' => tier_related_taxon,
         'visual_only' => tier_visual_only,
         _ => code,
       };

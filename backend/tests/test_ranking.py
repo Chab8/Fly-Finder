@@ -73,3 +73,29 @@ def test_color_overlap_uses_color_families(snapshot):
     score, shared = color_overlap(["Sulphur", "grey"], fly)
     assert shared == ["yellow"] and score == 0.5
     assert color_overlap([], fly) == (None, [])
+
+
+def test_relatives_in_same_order_fill_in_when_taxon_has_no_relations(snapshot):
+    """A dragonfly nymph identified only as "Anisoptera" (not in the catalog) gets Aeshnidae's flies."""
+    engine = RecommendationEngine()
+    adams = VectorHit(uuid.uuid4(), "fly", fly_id(snapshot, "adams"), 0.75)
+    data = RankingInput(
+        lineage=snapshot.resolve_lineage(["Anisoptera"]), identified_rank_level=RANK_LEVEL[TaxonRank.suborder],
+        observed_stage=LifeStage.nymph, observed_colors=[], fly_visual_hits=[adams],
+        relatives=snapshot.organisms_in_order("Odonata"),
+    )
+    recs = engine.recommend(snapshot, data, "en")
+    # The catalog has no suborders, so both Odonata nymph patterns qualify.
+    assert {r.fly.slug for r in recs[:2]} == {"dragonfly-nymph", "damsel-nymph"}
+    assert recs[0].tier == RecommendationTier.related_taxon and "same order (Odonata)" in recs[0].reasons[0]
+    assert recs[-1].fly.slug == "adams" and recs[-1].tier == RecommendationTier.visual_only
+
+
+def test_relatives_are_ignored_when_lineage_has_relations(snapshot):
+    engine = RecommendationEngine()
+    data = RankingInput(
+        lineage=snapshot.resolve_lineage(["Baetidae"]), identified_rank_level=RANK_LEVEL[TaxonRank.family],
+        observed_stage=LifeStage.nymph, observed_colors=[], fly_visual_hits=[],
+        relatives=snapshot.organisms_in_order("Ephemeroptera"),
+    )
+    assert all(r.tier != RecommendationTier.related_taxon for r in engine.recommend(snapshot, data, "en"))

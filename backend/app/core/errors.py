@@ -75,7 +75,9 @@ def error_body(code: str, message: str, details: dict | None = None) -> dict:
 def install_error_handlers(app: FastAPI) -> None:
     @app.exception_handler(AppError)
     async def _app_error(_: Request, exc: AppError) -> JSONResponse:
-        return JSONResponse(status_code=exc.status_code, content=error_body(exc.code, exc.message, exc.details))
+        retry_after = exc.details.get("retry_after_seconds") if exc.details else None
+        headers = {"Retry-After": str(retry_after)} if retry_after else None
+        return JSONResponse(status_code=exc.status_code, content=error_body(exc.code, exc.message, exc.details), headers=headers)
 
     @app.exception_handler(RequestValidationError)
     async def _validation_error(_: Request, exc: RequestValidationError) -> JSONResponse:

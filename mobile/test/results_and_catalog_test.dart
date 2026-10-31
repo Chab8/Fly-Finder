@@ -50,7 +50,8 @@ void main() {
   testWidgets('fly detail opens products; empty products are explained', (tester) async {
     await pumpApp(tester, api: FakeApi(), initialLocation: '/flies/x');
     expect(find.text('Woolly Bugger'), findsOneWidget);
-    await tester.scrollUntilVisible(find.byKey(const Key('fly-products')), 300);
+    // The photo gallery is a second Scrollable; scroll the page itself.
+    await tester.scrollUntilVisible(find.byKey(const Key('fly-products')), 300, scrollable: find.byType(Scrollable).first);
     await tester.tap(find.byKey(const Key('fly-products')));
     await tester.pumpAndSettle();
     expect(find.text('No verified products for this pattern yet.'), findsOneWidget);

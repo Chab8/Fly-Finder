@@ -14,6 +14,8 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+import sys
+import time
 from collections import Counter
 from pathlib import Path
 
@@ -21,22 +23,36 @@ import httpx
 
 ROOT = Path(__file__).resolve().parents[1]
 UNSURE = {"inconclusive", "insufficient_image", "not_compatible"}
+# Fixed anonymous id so evaluation runs are grouped in the identification log.
+CLIENT = {"X-Client-Id": "00000000-0000-4000-8000-00000000e7a1"}
 
 
 def ratio(hits: int, total: int) -> str:
     return f"{hits}/{total} ({hits / total:.0%})" if total else "n/a"
 
 
-def evaluate(api: str, manifest: Path, lang: str) -> dict:
+def post_image(http: httpx.Client, kind: str, image: Path, lang: str) -> httpx.Response:
+    """POST one photo, waiting out the API rate limit (Retry-After) instead of counting it as an error."""
+    for _ in range(5):
+        with image.open("rb") as f:
+            response = http.post(f"/api/v1/identify/{kind}", files={"image": (image.name, f)}, params={"lang": lang}, headers=CLIENT)
+        if response.status_code != 429:
+            return response
+        wait = int(response.headers.get("Retry-After", "10"))
+        print(f"rate limited, waiting {wait}s", file=sys.stderr)
+        time.sleep(wait)
+    return response
+
+
+def evaluate(api: str, manifest: Path, lang: str, timeout: float = 120) -> dict:
     rows = list(csv.DictReader(line for line in manifest.open(encoding="utf-8") if not line.startswith("#")))
     stats: Counter = Counter()
     details = []
-    with httpx.Client(base_url=api.rstrip("/"), timeout=120) as http:
+    with httpx.Client(base_url=api.rstrip("/"), timeout=timeout) as http:
         for row in rows:
             image = (manifest.parent / row["image_path"]).resolve()
             kind = row["kind"]
-            with image.open("rb") as f:
-                response = http.post(f"/api/v1/identify/{kind}", files={"image": (image.name, f)}, params={"lang": lang})
+            response = post_image(http, kind, image, lang)
             if response.status_code != 200:
                 stats["api_errors"] += 1
                 details.append({"image": row["image_path"], "error": response.status_code})
@@ -72,7 +88,15 @@ def evaluate(api: str, manifest: Path, lang: str) -> dict:
                     stats["pattern_top3_hit"] += int(primary.get("slug") == expected or expected in alternatives)
             if expected_outcome == "identified":
                 stats["false_abstain"] += int(level in UNSURE)
-            details.append({"image": row["image_path"], "match_level": level})
+            primary = result.get("primary") or {}
+            analysis = result.get("analysis") or {}
+            details.append({
+                "image": row["image_path"], "match_level": level,
+                "primary": (primary.get("fly") or {}).get("slug") or primary.get("scientific_name"),
+                "life_stage": result.get("life_stage"),
+                "top3": [r["fly"]["slug"] for r in result.get("recommendations", [])[:3]],
+                "ai_available": analysis.get("ai_available"), "duration_ms": analysis.get("duration_ms"),
+            })
 
     report = {
         "photos": len(rows),
@@ -86,6 +110,7 @@ def evaluate(api: str, manifest: Path, lang: str) -> dict:
         "correct_abstentions": ratio(stats["abstain_correct"], stats["abstain_total"]),
         "abstained_on_identifiable_photos": stats["false_abstain"],
         "api_errors": stats["api_errors"],
+        "ai_unavailable": sum(1 for d in details if d.get("ai_available") is False),
         "details": details,
     }
     return report
@@ -97,8 +122,9 @@ def main() -> None:
     parser.add_argument("--manifest", type=Path, default=ROOT / "data" / "evaluation" / "manifest.csv")
     parser.add_argument("--lang", default="en")
     parser.add_argument("--out", type=Path, help="Write the JSON report here")
+    parser.add_argument("--timeout", type=float, default=120, help="Seconds to wait for each identification")
     args = parser.parse_args()
-    report = evaluate(args.api, args.manifest, args.lang)
+    report = evaluate(args.api, args.manifest, args.lang, args.timeout)
     text = json.dumps(report, indent=2, ensure_ascii=False)
     print(text)
     if args.out:

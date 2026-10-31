@@ -20,6 +20,7 @@ from app.schemas.identification import (
     TaxonomyMatch,
     VisualFeatures,
 )
+from app.services.i18n import color_name
 from app.services.identification.common import IdentificationContext, IdentificationPipeline, PipelineDeps
 from app.services.identification.confidence import gate_subject, organism_level, visual_only_level
 from app.services.recommendations.ranking import RankingInput, RecommendationEngine
@@ -102,7 +103,7 @@ class OrganismIdentificationService(IdentificationPipeline):
     # ------------------------------------------------------------- main flow
     def identify(self, data: bytes, ctx: IdentificationContext) -> OrganismIdentificationResponse:
         image = self.prepare(data, ctx)
-        vision: OrganismVisionResult | None = self.run_ai(lambda: self.deps.analyzer.analyze_organism(image), ctx)
+        vision: OrganismVisionResult | None = self.run_ai(lambda: self.deps.analyzer.analyze_organism(image, ctx.lang), ctx)
         vector = self.embed(image, ctx)
         if vision is None and vector is None:
             raise ProviderUnavailableError("analysis", "Image analysis is temporarily unavailable. Please try again later.", code="analysis_unavailable")
@@ -163,7 +164,7 @@ class OrganismIdentificationService(IdentificationPipeline):
         response.life_stage = vision.life_stage if vision.life_stage_confidence != AIConfidence.none else LifeStage.unknown
         response.life_stage_confidence = vision.life_stage_confidence
         response.visual_features = VisualFeatures(
-            colors=vision.colors, morphological_features=vision.morphological_features,
+            colors=[color_name(c, ctx.lang) for c in vision.colors], morphological_features=vision.morphological_features,
             estimated_length_mm=vision.estimated_length_mm if vision.size_reference else None,
             size_reference=vision.size_reference, habitat_hint=vision.habitat_hint,
         )
@@ -189,12 +190,14 @@ class OrganismIdentificationService(IdentificationPipeline):
             ctx.warn("not_in_catalog", name=primary.scientific_name)
 
         lineage = snapshot.resolve_lineage(self._lineage_names(primary))
+        relatives = [] if lineage else snapshot.organisms_in_order(primary.order)
         fly_hits = self.similar("fly", vector, 20)
         response.recommendations = self._engine.recommend(
             snapshot,
             RankingInput(
                 lineage=lineage, identified_rank_level=RANK_LEVEL[primary.taxonomic_rank],
                 observed_stage=response.life_stage, observed_colors=vision.colors, fly_visual_hits=fly_hits,
+                relatives=relatives,
             ),
             ctx.lang,
         )

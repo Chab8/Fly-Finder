@@ -256,7 +256,11 @@ class PgCatalogWriter:
             if image.owner_kind == "organism":  # fly images have no life stage
                 columns.append("life_stage_id")
                 values.append(self._stages[image.life_stage.value] if image.life_stage else None)
-            updates = ", ".join(f"{c} = excluded.{c}" for c in columns if c not in ("id", owner_col, "source", "source_id"))
+            # A re-import without --upload must not forget the copy already stored in Supabase Storage.
+            updates = ", ".join(
+                f"{c} = coalesce(excluded.{c}, {table}.{c})" if c == "storage_path" else f"{c} = excluded.{c}"
+                for c in columns if c not in ("id", owner_col, "source", "source_id")
+            )
             self._conn.execute(
                 f"insert into {table} ({', '.join(columns)}) values ({', '.join(['%s'] * len(columns))}) "
                 f"on conflict (id) do update set {updates}",

@@ -34,6 +34,11 @@ def test_empty_env_values_mean_not_configured():
     assert settings.cors_origins == ["https://a.com", "https://b.com"]
 
 
+@pytest.mark.parametrize("url", ["https://abc.supabase.co", "https://abc.supabase.co/", "https://abc.supabase.co/rest/v1/"])
+def test_supabase_url_is_the_project_root(url):
+    assert Settings(_env_file=None, supabase_url=url).supabase_url == "https://abc.supabase.co"
+
+
 def test_secrets_are_not_printed():
     settings = Settings(_env_file=None, gemini_api_key="AIzaSecretValue123")
     assert "AIzaSecretValue123" not in repr(settings)
@@ -125,6 +130,34 @@ def test_inaturalist_only_returns_commercially_reusable_photos():
     assert photos[0].url.endswith("/medium.jpg") and photos[0].license == "CC BY 4.0"
     client.observation_photos(123, "Baetis")
     assert sleeps and sleeps[0] > 0  # throttled to 1 request/second
+
+
+def test_inaturalist_life_stage_filter_uses_annotation():
+    def handler(request):
+        assert (request.url.params["term_id"], request.url.params["term_value_id"]) == ("1", "5")
+        return httpx.Response(200, json={"results": [{"id": 9, "photos": [{"id": 1, "license_code": "cc0", "url": "https://x/1/square.jpg"}]}]})
+
+    client = INaturalistClient("https://api.inaturalist.org/v1", "test", http=httpx.Client(base_url="https://api.inaturalist.org/v1", transport=httpx.MockTransport(handler)), sleep=lambda _: None)
+    assert client.observation_photos(123, "Baetis", life_stage="nymph")[0].life_stage == "nymph"
+
+
+def test_inaturalist_retries_dropped_connections_and_429():
+    calls = []
+
+    def handler(request):
+        calls.append(1)
+        if len(calls) == 1:
+            raise httpx.RemoteProtocolError("Server disconnected")
+        if len(calls) == 2:
+            return httpx.Response(429)
+        return httpx.Response(200, json={"results": []})
+
+    client = INaturalistClient("https://api.inaturalist.org/v1", "test", http=httpx.Client(base_url="https://api.inaturalist.org/v1", transport=httpx.MockTransport(handler)), sleep=lambda _: None)
+    assert client.observation_photos(1, "Baetis") == [] and len(calls) == 3
+
+    always_down = INaturalistClient("https://api.inaturalist.org/v1", "test", http=httpx.Client(base_url="https://api.inaturalist.org/v1", transport=httpx.MockTransport(lambda r: httpx.Response(503))), sleep=lambda _: None)
+    with pytest.raises(ProviderUnavailableError):
+        always_down.observation_photos(1, "Baetis")
 
 
 @pytest.mark.parametrize(("code", "ok"), [("cc0", True), ("CC-BY", True), ("cc-by-sa", True), ("cc-by-nc", False), ("cc-by-nd", False), (None, False)])

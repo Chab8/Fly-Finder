@@ -63,6 +63,13 @@ def test_organism_happy_path(make_container):
     assert stored[0].primary_label == "Baetis" and stored[0].candidates[0].organism_id == organism_id(container.snapshots.get(), "Baetis")
 
 
+def test_colours_are_matched_in_english_but_shown_in_the_user_language(make_container):
+    container = make_container(analyzer=FakeAnalyzer(organism=baetis_vision()), gbif=GBIF_BAETIS)
+    response = container.organism_service.identify(make_image_bytes(), ctx("es"))
+    assert response.visual_features.colors == ["marrón"]
+    assert any("marrón" in reason for rec in response.recommendations for reason in rec.reasons)
+
+
 def test_species_outside_catalog_uses_ancestors_and_warns(make_container):
     vision = baetis_vision(name="Baetis rhodani", rank=TaxonRank.species)
     gbif = FakeGbif({"baetis rhodani": gbif_exact("Baetis rhodani", "species", order="Ephemeroptera", family="Baetidae", genus="Baetis")})
@@ -180,12 +187,20 @@ def test_real_insect_photo_in_fly_mode(make_container):
 
 
 def test_fly_visual_only_when_ai_is_down(make_container, snapshot):
-    hits = [VectorHit(uuid.uuid4(), "fly", fly_id(snapshot, "adams"), 0.9), VectorHit(uuid.uuid4(), "fly", fly_id(snapshot, "comparadun"), 0.6)]
+    hits = [VectorHit(uuid.uuid4(), "fly", fly_id(snapshot, "adams"), 0.96), VectorHit(uuid.uuid4(), "fly", fly_id(snapshot, "comparadun"), 0.6)]
     container = make_container(analyzer=FakeAnalyzer(available=False), vector_index=FakeVectorIndex({"fly": hits}))
     response = container.fly_service.identify(make_image_bytes(), ctx())
     assert response.primary.fly.slug == "adams" and response.primary.evidence == ["visual"]
     assert response.primary.ai_confidence is None
     assert response.match_level == MatchLevel.low_match
+
+
+def test_typical_fly_photo_similarity_is_not_enough_to_name_a_pattern(make_container, snapshot):
+    """0.9 is what unrelated tied flies score against each other with OpenCLIP: stay inconclusive."""
+    hits = [VectorHit(uuid.uuid4(), "fly", fly_id(snapshot, "adams"), 0.9)]
+    container = make_container(analyzer=FakeAnalyzer(available=False), vector_index=FakeVectorIndex({"fly": hits}))
+    response = container.fly_service.identify(make_image_bytes(), ctx())
+    assert response.primary.fly.slug == "adams" and response.match_level == MatchLevel.inconclusive
 
 
 def test_demo_mode_flags_everything(make_container):

@@ -89,6 +89,11 @@ class CatalogSnapshot:
         for organism in self.organisms.values():
             for name in (organism.scientific_name, *organism.synonyms):
                 self._organism_names.setdefault(normalize_name(name), organism)
+        # Common names (any language) only resolve loose AI hints such as "leech"; taxonomy uses the index above.
+        self._organism_common_names: dict[str, OrganismRecord] = {}
+        for organism in sorted(self.organisms.values(), key=lambda o: -RANK_LEVEL[o.taxonomic_rank]):
+            for common in organism.common_names:
+                self._organism_common_names.setdefault(normalize_name(common.name), organism)
 
         self._fly_names: dict[str, tuple[FlyRecord, str]] = {}
         for fly in self.flies.values():
@@ -264,6 +269,25 @@ class CatalogSnapshot:
 
     def find_organism_by_name(self, name: str) -> OrganismRecord | None:
         return self._organism_names.get(normalize_name(name))
+
+    def find_organism_by_group(self, name: str) -> OrganismRecord | None:
+        """Scientific name first, then a common name ("leech" -> Hirudinea via "Leeches")."""
+        found = self.find_organism_by_name(name)
+        if found:
+            return found
+        key = normalize_name(name)
+        for candidate in (key, f"{key}s", f"{key}es"):
+            if candidate in self._organism_common_names:
+                return self._organism_common_names[candidate]
+        return None
+
+    def organisms_in_order(self, order: str | None) -> list[OrganismRecord]:
+        """Catalog organisms classified in this order (e.g. "Odonata" -> Aeshnidae, Coenagrionidae)."""
+        key = normalize_name(order or "")
+        if not key:
+            return []
+        found = [o for o in self.organisms.values() if normalize_name(o.order or "") == key]
+        return sorted(found, key=lambda o: (-RANK_LEVEL[o.taxonomic_rank], o.scientific_name))
 
     def resolve_lineage(self, names_specific_first: list[str]) -> list[OrganismRecord]:
         """Catalog organisms matching a taxon or any of its ancestors, most specific first."""

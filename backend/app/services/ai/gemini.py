@@ -16,7 +16,7 @@ from pydantic import BaseModel, ValidationError
 
 from app.core.errors import ProviderResponseError, ProviderUnavailableError
 from app.schemas.ai import FlyVisionResult, OrganismVisionResult
-from app.services.ai.prompts import FLY_PROMPT, ORGANISM_PROMPT
+from app.services.ai.prompts import FLY_PROMPT, LANGUAGE_NAMES, ORGANISM_PROMPT
 from app.services.images.processing import ProcessedImage
 
 logger = logging.getLogger(__name__)
@@ -58,7 +58,7 @@ def _classify_failure(exc: Exception) -> ProviderUnavailableError:
 class GeminiVisionAnalyzer:
     provider = "gemini"
 
-    def __init__(self, *, api_key: str, model: str, timeout_seconds: float, client: Any | None = None):
+    def __init__(self, *, api_key: str, model: str, timeout_seconds: float, thinking_level: str | None = None, client: Any | None = None):
         if client is None:
             from google import genai
 
@@ -66,12 +66,16 @@ class GeminiVisionAnalyzer:
         self._client = client
         self.model = model
         self._timeout = timeout_seconds
+        self._thinking_level = thinking_level
 
     @property
     def available(self) -> bool:
         return True
 
     def _generate(self, prompt: str, image: ProcessedImage, schema: type[T]) -> T:
+        options: dict[str, Any] = {}
+        if self._thinking_level:
+            options["generation_config"] = {"thinking_level": self._thinking_level}
         try:
             interaction = self._client.interactions.create(
                 model=self.model,
@@ -81,6 +85,7 @@ class GeminiVisionAnalyzer:
                 ],
                 response_format={"type": "text", "mime_type": "application/json", "schema": inline_json_schema(schema)},
                 timeout=self._timeout,
+                **options,
             )
         except Exception as exc:  # SDK raises several exception families; classify, never leak details
             error = _classify_failure(exc)
@@ -96,9 +101,11 @@ class GeminiVisionAnalyzer:
             logger.warning("Gemini response failed schema validation (%d errors)", exc.error_count())
             raise ProviderResponseError("gemini", "The AI response did not match the expected format.") from exc
 
-    def analyze_organism(self, image: ProcessedImage) -> OrganismVisionResult:
-        return self._generate(ORGANISM_PROMPT, image, OrganismVisionResult)
+    def analyze_organism(self, image: ProcessedImage, lang: str = "en") -> OrganismVisionResult:
+        prompt = ORGANISM_PROMPT.format(language=LANGUAGE_NAMES.get(lang, "English"))
+        return self._generate(prompt, image, OrganismVisionResult)
 
-    def analyze_fly(self, image: ProcessedImage, known_patterns: list[str]) -> FlyVisionResult:
+    def analyze_fly(self, image: ProcessedImage, known_patterns: list[str], lang: str = "en") -> FlyVisionResult:
         names = ", ".join(known_patterns[:_MAX_KNOWN_PATTERNS_IN_PROMPT]) or "(catalog empty)"
-        return self._generate(FLY_PROMPT.format(known_patterns=names), image, FlyVisionResult)
+        prompt = FLY_PROMPT.format(known_patterns=names, language=LANGUAGE_NAMES.get(lang, "English"))
+        return self._generate(prompt, image, FlyVisionResult)

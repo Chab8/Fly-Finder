@@ -7,7 +7,7 @@ Aplicación móvil mundial para pesca con mosca que conecta organismos reales co
 
 Agua dulce y salada, tiendas locales e internacionales, español e inglés. "Fly Finder" es un nombre provisional configurable (`APP_NAME`).
 
-> Estado: **MVP ejecutable**. Backend, base de datos, motores de identificación, catálogo curado y app Flutter funcionan y están probados. La IA real (Gemini) y Supabase quedan **pendientes de tus credenciales** — ver [docs/USER_TASKS.md](docs/USER_TASKS.md).
+> Estado: **MVP ejecutable, probado con Gemini y Supabase reales** (2026-10-31): la app identifica organismos y moscas de punta a punta en el simulador iOS. Catálogo con 110 fotos con licencia. Pendiente: elegir el modelo de Gemini por latencia, fotos de más patrones y revisión experta — ver [docs/USER_TASKS.md](docs/USER_TASKS.md).
 
 ## Tecnologías
 
@@ -16,7 +16,7 @@ Agua dulce y salada, tiendas locales e internacionales, español e inglés. "Fly
 | App móvil | Flutter 3.47 · Riverpod 3 · GoRouter 18 · Dio · image_picker · gen-l10n (es/en) |
 | API | Python 3.12 · FastAPI · Pydantic 2 |
 | Base de datos | Supabase PostgreSQL + pgvector + Storage, migraciones en `supabase/migrations` |
-| Visión | Gemini API (`gemini-3.8-flash`, salida JSON validada con Pydantic) |
+| Visión | Gemini API (`GEMINI_MODEL`: `gemini-3.8-flash` o `gemini-3.5-flash-lite`, salida JSON validada con Pydantic) |
 | Similitud visual | OpenCLIP ViT-B-32 / laion2b_s34b_b79k (MIT), 512 dimensiones |
 | Taxonomía | GBIF Species API (validación de nombres), iNaturalist (herramientas de catálogo) |
 

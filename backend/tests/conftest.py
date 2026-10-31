@@ -61,13 +61,13 @@ class FakeAnalyzer:
     def available(self) -> bool:
         return self._available
 
-    def analyze_organism(self, image):
+    def analyze_organism(self, image, lang="en"):
         self.calls.append(("organism", None))
         if self.error:
             raise self.error
         return self.organism
 
-    def analyze_fly(self, image, known_patterns):
+    def analyze_fly(self, image, known_patterns, lang="en"):
         self.calls.append(("fly", known_patterns))
         if self.error:
             raise self.error

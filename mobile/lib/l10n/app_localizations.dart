@@ -962,6 +962,12 @@ abstract class AppLocalizations {
   /// **'Documented for another life stage'**
   String get tier_biological_other_stage;
 
+  /// No description provided for @tier_related_taxon.
+  ///
+  /// In en, this message translates to:
+  /// **'Documented for a relative'**
+  String get tier_related_taxon;
+
   /// No description provided for @tier_visual_only.
   ///
   /// In en, this message translates to:

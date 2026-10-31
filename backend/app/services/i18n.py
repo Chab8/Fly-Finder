@@ -111,6 +111,10 @@ MESSAGES: dict[str, dict[str, str]] = {
         "en": "Recommended for the broader group {organism}.",
         "es": "Recomendada para el grupo más amplio {organism}.",
     },
+    "reason_related_taxon": {
+        "en": "No fly is documented for this taxon; documented for {organism}, a relative in the same order ({order}).",
+        "es": "No hay moscas documentadas para este taxón; documentada para {organism}, un pariente del mismo orden ({order}).",
+    },
     "reason_expert_verified": {
         "en": "Relation verified by an expert ({source}).",
         "es": "Relación verificada por un experto ({source}).",
@@ -140,6 +144,26 @@ MESSAGES: dict[str, dict[str, str]] = {
         "es": "Solo similitud visual: no hay relación biológica documentada.",
     },
 }
+
+
+# Colour words the vision model returns (always English) -> display names. Unknown words are kept.
+COLORS_ES = {
+    "olive": "oliva", "olive green": "verde oliva", "green": "verde", "chartreuse": "chartreuse", "brown": "marrón",
+    "dark brown": "marrón oscuro", "light brown": "marrón claro", "rust": "óxido", "rusty": "óxido", "mahogany": "caoba",
+    "tan": "canela", "cream": "crema", "beige": "beige", "sand": "arena", "sulphur": "azufre", "yellow": "amarillo",
+    "pale yellow": "amarillo pálido", "golden": "dorado", "gold": "dorado", "amber": "ámbar", "orange": "naranja",
+    "grey": "gris", "gray": "gris", "dark grey": "gris oscuro", "dark gray": "gris oscuro", "light grey": "gris claro",
+    "light gray": "gris claro", "dun": "dun (gris pardo)", "blue dun": "gris azulado", "grizzly": "grizzly (barrado)",
+    "black": "negro", "white": "blanco", "silver": "plateado", "red": "rojo", "pink": "rosa", "purple": "violeta",
+    "blue": "azul", "translucent": "translúcido", "clear": "transparente", "copper": "cobre", "bronze": "bronce",
+    "pearl": "perlado", "iridescent": "iridiscente", "mottled": "moteado", "speckled": "moteado", "barred": "barrado",
+}
+
+
+def color_name(color: str, lang: str) -> str:
+    if lang != "es":
+        return color
+    return COLORS_ES.get(color.strip().lower(), color)
 
 
 def normalize_language(lang: str | None) -> str:

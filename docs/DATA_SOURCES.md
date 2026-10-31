@@ -10,7 +10,7 @@ Regla general: **nada de scraping no autorizado**. Toda fuente se usa por su API
 | **Troutnut.com** | Sin API pública | — | Referencia entomológica de alta calidad | **Nada sin permiso** | Derechos de sus autores | Requiere acuerdo escrito |
 | **IdentaFly** (my.identafly.app) | Sin API pública documentada | — | Relaciones insecto↔mosca | **Nada sin permiso** | Derechos de sus autores | Requiere acuerdo escrito |
 | **Fabricantes, atadores, tiendas** | Variable | — | Fotos de moscas, productos, precios | Lo que autoricen por escrito | Solo con permiso | Acuerdo escrito (ver [IMAGE_LICENSES.md](IMAGE_LICENSES.md)) |
-| **Wikimedia Commons** | API MediaWiki | No | Fotos con licencia libre | Metadatos y archivos con licencia compatible | Por archivo | CC0 / CC BY / CC BY-SA sí; verificar cada archivo |
+| **Wikimedia Commons** | API MediaWiki | No | Fotos con licencia libre | 21 fotos de moscas (14 patrones) en `fly_images.csv` y 7 de evaluación | Por archivo (`extmetadata.LicenseShortName`) | CC0 / dominio público / CC BY / CC BY-SA sí; verificar cada archivo. Exige un `User-Agent` con contacto real o responde 403 ([política](https://w.wiki/4wJS)) |
 
 ## Cómo se usan hoy
 
@@ -24,7 +24,7 @@ Regla general: **nada de scraping no autorizado**. Toda fuente se usa por su API
 ## Límites y condiciones a respetar
 
 - **GBIF**: sin límite numérico publicado para la API de lectura; uso razonable, `User-Agent` identificable, citar GBIF y los datasets usados. Descargas masivas solo por el servicio oficial de descargas (con DOI), nunca paginando la API.
-- **iNaturalist**: ≤1 solicitud/segundo (el cliente lo impone), `User-Agent` identificable, sin descargas masivas de fotos. **Pendiente para vos**: leer la página oficial "API Recommended Practices" y los Términos de uso (no pudimos acceder automáticamente) y confirmar límites diarios y condiciones de uso comercial de la API. Ver [USER_TASKS.md](USER_TASKS.md).
+- **iNaturalist**: ≤1 solicitud/segundo (el cliente lo impone y reintenta cortes y 429 con espera), `User-Agent` identificable, sin descargas masivas de fotos. Se usaron 89 fotos para el catálogo y 15 para evaluación. **Pendiente para vos**: leer la página oficial "API Recommended Practices" y los Términos de uso (no pudimos acceder automáticamente) y confirmar límites diarios y condiciones de uso comercial de la API. Ver [USER_TASKS.md](USER_TASKS.md).
 - **Gemini**: cuotas por proyecto en AI Studio; costos en [API_SETUP.md](API_SETUP.md).
 
 ## Datos que todavía faltan

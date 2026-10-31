@@ -1,5 +1,5 @@
 {
-  "identification_id": "862a9fa6-0cf9-4bba-b8e3-61a96dbba54e",
+  "identification_id": "1ea8096d-025e-47cc-a6de-7cf853bd5ecd",
   "kind": "fly",
   "match_level": "high_match",
   "subject_type": "artificial_fly",
@@ -20,7 +20,7 @@
         "olive",
         "brown"
       ],
-      "thumbnail_url": null,
+      "thumbnail_url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/81/Black_Woolly_Bugger_by_James_Stripes.jpg/960px-Black_Woolly_Bugger_by_James_Stripes.jpg",
       "is_demo": false
     },
     "in_catalog": true,
@@ -67,7 +67,7 @@
         "family": "Aeshnidae",
         "genus": null,
         "organism_group": "aquatic_insect",
-        "thumbnail_url": null,
+        "thumbnail_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/154883429/medium.jpeg",
         "is_demo": false
       }
     },
@@ -87,7 +87,7 @@
         "family": "Cambaridae",
         "genus": null,
         "organism_group": "crustacean",
-        "thumbnail_url": null,
+        "thumbnail_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/481301446/medium.jpg",
         "is_demo": false
       }
     },
@@ -147,7 +147,7 @@
         "family": "Cottidae",
         "genus": null,
         "organism_group": "fish",
-        "thumbnail_url": null,
+        "thumbnail_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/320896301/medium.jpg",
         "is_demo": false
       }
     },
@@ -167,7 +167,7 @@
         "family": "Salmonidae",
         "genus": null,
         "organism_group": "fish",
-        "thumbnail_url": null,
+        "thumbnail_url": "https://inaturalist-open-data.s3.amazonaws.com/photos/344916678/medium.jpeg",
         "is_demo": false
       }
     }

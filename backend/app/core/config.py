@@ -2,9 +2,11 @@
 
 from __future__ import annotations
 
+import re
 from enum import Enum
 from functools import lru_cache
 from pathlib import Path
+from typing import Literal
 
 from pydantic import Field, SecretStr, field_validator, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -51,6 +53,9 @@ class Settings(BaseSettings):
     gemini_api_key: SecretStr | None = None
     gemini_model: str = "gemini-3.8-flash"
     gemini_timeout_seconds: float = 45.0
+    # generation_config.thinking_level (https://ai.google.dev/gemini-api/docs/thinking). The model
+    # default (medium) took 20-45 s per photo; lower thinking is the documented way to cut latency.
+    gemini_thinking_level: Literal["low", "medium", "high"] = "low"
 
     embeddings_enabled: bool = True
     openclip_model: str = "ViT-B-32"
@@ -61,7 +66,7 @@ class Settings(BaseSettings):
 
     gbif_api_url: str = "https://api.gbif.org/v1"
     inaturalist_api_url: str = "https://api.inaturalist.org/v1"
-    external_user_agent: str = "FlyFinder/0.1"
+    external_user_agent: str = "FlyFinder/0.1 (https://github.com/Chab8/Fly-Finder)"
     external_timeout_seconds: float = 8.0
 
     # Salt for hashing anonymous client ids before storing them. Set a long random value
@@ -87,6 +92,14 @@ class Settings(BaseSettings):
     @classmethod
     def _empty_to_none(cls, value: object) -> object:
         return None if value == "" else value
+
+    @field_validator("supabase_url")
+    @classmethod
+    def _project_url(cls, value: str | None) -> str | None:
+        # The dashboard also shows the REST endpoint (.../rest/v1/); Storage needs the project root.
+        if value is None:
+            return None
+        return re.sub(r"/rest/v1/?$", "", value.rstrip("/"))
 
     @field_validator("client_hash_salt", mode="before")
     @classmethod
