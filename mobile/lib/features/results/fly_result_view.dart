@@ -20,7 +20,7 @@ class FlyResultView extends StatelessWidget {
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context);
     final primary = result.primary;
-    return ListView(padding: const EdgeInsets.fromLTRB(20, 8, 20, 24), children: [
+    return ListView(padding: const EdgeInsets.fromLTRB(20, 8, 20, 28), children: [
       ResultHeader(result: result, photo: photo),
       if (primary == null) ...[
         const SizedBox(height: 24),
@@ -34,7 +34,7 @@ class FlyResultView extends StatelessWidget {
         InfoCard(
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             if (result.colors.isNotEmpty) Wrap(spacing: 6, runSpacing: 6, children: [for (final c in result.colors) TagChip(c)]),
-            for (final feature in result.features) Padding(padding: const EdgeInsets.only(top: 8), child: Text('• $feature')),
+            for (final feature in result.features) BulletText(feature),
           ]),
         ),
       ],
@@ -49,9 +49,12 @@ class FlyResultView extends StatelessWidget {
               child: InfoCard(
                 onTap: () => context.push('/organisms/${relation.organism!.id}'),
                 child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  Text(relation.organism!.scientificName, style: const TextStyle(fontStyle: FontStyle.italic, fontWeight: FontWeight.w600, fontSize: 16)),
-                  if (relation.organism!.commonName != null) Text(relation.organism!.commonName!, style: const TextStyle(color: AppColors.muted)),
-                  const SizedBox(height: 8),
+                  Row(children: [
+                    Expanded(child: Text(relation.organism!.scientificName, style: context.species(19))),
+                    Icon(Icons.chevron_right, color: context.fly.inkSecondary),
+                  ]),
+                  if (relation.organism!.commonName != null) Text(relation.organism!.commonName!, style: context.secondaryStyle),
+                  const SizedBox(height: 10),
                   Wrap(spacing: 6, runSpacing: 6, children: [
                     TagChip(t.stage(relation.lifeStage)),
                     TagChip(t.compatibility(relation.biologicalCompatibility)),
@@ -100,14 +103,15 @@ class _FlyCandidateCard extends StatelessWidget {
     final t = AppLocalizations.of(context);
     final fly = candidate.fly;
     return InfoCard(
+      highlight: prominent,
       onTap: fly == null ? null : () => context.push('/flies/${fly.id}'),
       child: Row(children: [
-        CatalogThumb(url: fly?.thumbnailUrl, icon: flyIcon, size: prominent ? 72 : 56),
+        CatalogThumb(url: fly?.thumbnailUrl, icon: flyIcon, size: prominent ? 76 : 56),
         const SizedBox(width: 14),
         Expanded(
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Text(candidate.patternName, style: prominent ? Theme.of(context).textTheme.titleLarge : Theme.of(context).textTheme.titleMedium),
-            if (fly != null || category != null) Text(t.category(fly?.category ?? category!), style: const TextStyle(color: AppColors.muted)),
+            Text(candidate.patternName, style: context.serif(prominent ? 24 : 18)),
+            if (fly != null || category != null) Text(t.category(fly?.category ?? category!), style: context.secondaryStyle),
             const SizedBox(height: 8),
             Wrap(spacing: 6, runSpacing: 6, children: [
               if (candidate.aiConfidence != null) TagChip(t.aiConfidence(t.confidence(candidate.aiConfidence!))),
@@ -116,7 +120,7 @@ class _FlyCandidateCard extends StatelessWidget {
             ]),
           ]),
         ),
-        if (fly != null) const Icon(Icons.chevron_right, color: AppColors.muted),
+        if (fly != null) Icon(Icons.chevron_right, color: context.fly.inkSecondary),
       ]),
     );
   }

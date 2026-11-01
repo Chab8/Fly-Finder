@@ -11,44 +11,79 @@ import '../../widgets/common.dart';
 import '../../widgets/labels.dart';
 import 'product_tile.dart';
 
-class _Gallery extends StatelessWidget {
+/// Photo plate: swipeable, with page dots. Attribution and license are mandatory for every
+/// catalog photo, so the credit line always sits under the image.
+class _Gallery extends StatefulWidget {
   const _Gallery(this.images, this.icon);
   final List<CatalogImage> images;
   final IconData icon;
 
   @override
+  State<_Gallery> createState() => _GalleryState();
+}
+
+class _GalleryState extends State<_Gallery> {
+  int _page = 0;
+
+  @override
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context);
+    final fly = context.fly;
+    final images = widget.images;
     if (images.isEmpty) {
       return Container(
         height: 160,
-        decoration: BoxDecoration(color: AppColors.sandLight, borderRadius: BorderRadius.circular(20)),
+        decoration: BoxDecoration(color: fly.tint, borderRadius: BorderRadius.circular(20), border: Border.all(color: fly.hairline)),
         child: Center(
           child: Column(mainAxisSize: MainAxisSize.min, children: [
-            Icon(icon, size: 44, color: AppColors.olive),
+            Icon(widget.icon, size: 44, color: fly.accent),
             const SizedBox(height: 8),
-            Text(t.noImages, style: const TextStyle(color: AppColors.muted)),
+            Text(t.noImages, style: context.secondaryStyle),
           ]),
         ),
       );
     }
-    return SizedBox(
-      height: 240,
-      child: PageView(children: [
-        for (final image in images)
-          Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Expanded(
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: CachedNetworkImage(imageUrl: image.url, width: double.infinity, fit: BoxFit.cover),
+    final current = images[_page.clamp(0, images.length - 1)];
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      Container(
+        height: 240,
+        decoration: BoxDecoration(color: fly.tint, borderRadius: BorderRadius.circular(20), border: Border.all(color: fly.hairline)),
+        clipBehavior: Clip.antiAlias,
+        child: Stack(children: [
+          PageView(
+            onPageChanged: (index) => setState(() => _page = index),
+            children: [
+              for (final image in images) CachedNetworkImage(imageUrl: image.url, width: double.infinity, height: 240, fit: BoxFit.cover),
+            ],
+          ),
+          if (images.length > 1)
+            Positioned(
+              left: 0,
+              right: 0,
+              bottom: 10,
+              child: IgnorePointer(
+                child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  for (var i = 0; i < images.length; i++)
+                    Container(
+                      width: 7,
+                      height: 7,
+                      margin: const EdgeInsets.symmetric(horizontal: 3),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: i == _page ? Colors.white : Colors.white.withValues(alpha: 0.5),
+                        boxShadow: const [BoxShadow(color: Color(0x66000000), blurRadius: 3)],
+                      ),
+                    ),
+                ]),
               ),
             ),
-            const SizedBox(height: 4),
-            // Attribution and license are mandatory for every catalog photo.
-            Text(t.photoCredit(image.attribution, image.license), style: const TextStyle(fontSize: 11, color: AppColors.muted)),
-          ]),
-      ]),
-    );
+        ]),
+      ),
+      Padding(
+        padding: const EdgeInsets.only(top: 6, left: 2),
+        child: Text(t.photoCredit(current.attribution, current.license), style: context.captionStyle),
+      ),
+    ]);
   }
 }
 
@@ -60,8 +95,8 @@ class _ReviewNote extends StatelessWidget {
   Widget build(BuildContext context) => status == 'expert_verified'
       ? const SizedBox.shrink()
       : Padding(
-          padding: const EdgeInsets.only(top: 20),
-          child: Text(AppLocalizations.of(context).dataReviewNote, style: const TextStyle(color: AppColors.muted, fontSize: 12)),
+          padding: const EdgeInsets.only(top: 24),
+          child: Text(AppLocalizations.of(context).dataReviewNote, style: context.captionStyle),
         );
 }
 
@@ -84,15 +119,18 @@ class OrganismDetailScreen extends ConsumerWidget {
       body: async.when(
         loading: () => const LoadingView(),
         error: (error, _) => ErrorView(error: error, onRetry: () => ref.invalidate(organismDetailProvider(id))),
-        data: (o) => ListView(padding: const EdgeInsets.fromLTRB(20, 0, 20, 32), children: [
+        data: (o) => ListView(padding: const EdgeInsets.fromLTRB(20, 0, 20, 36), children: [
           if (o.summary.isDemo) const DemoBanner(),
-          Text(o.summary.scientificName, style: Theme.of(context).textTheme.headlineMedium?.copyWith(fontStyle: FontStyle.italic)),
+          Text(o.summary.scientificName, style: context.species(32)),
           if (o.summary.commonName != null)
-            Text(_namesFor(o, Localizations.localeOf(context).languageCode), style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: AppColors.muted)),
-          const SizedBox(height: 16),
+            Padding(
+              padding: const EdgeInsets.only(top: 4),
+              child: Text(_namesFor(o, Localizations.localeOf(context).languageCode), style: context.secondaryStyle.copyWith(fontSize: 17)),
+            ),
+          const SizedBox(height: 18),
           _Gallery(o.images, organismGroupIcon(o.summary.organismGroup)),
-          if (o.description != null) ...[SectionTitle(t.description), Text(o.description!, style: const TextStyle(height: 1.45))],
-          if (o.fishingNotes != null) ...[SectionTitle(t.fishingNotes), Text(o.fishingNotes!, style: const TextStyle(height: 1.45))],
+          if (o.description != null) ...[SectionTitle(t.description), Text(o.description!, style: context.readingStyle)],
+          if (o.fishingNotes != null) ...[SectionTitle(t.fishingNotes), Text(o.fishingNotes!, style: context.readingStyle)],
           SectionTitle(t.taxonomy),
           InfoCard(
             child: Column(children: [
@@ -108,7 +146,7 @@ class OrganismDetailScreen extends ConsumerWidget {
               for (final h in o.habitats) TagChip(t.habitatName(h), icon: Icons.water_outlined),
             ]),
           ],
-          if (o.distribution != null) ...[SectionTitle(t.distribution), Text(o.distribution!)],
+          if (o.distribution != null) ...[SectionTitle(t.distribution), Text(o.distribution!, style: context.readingStyle)],
           SectionTitle(t.imitatedBy),
           if (o.imitatedBy.isEmpty)
             InfoCard(child: Text(t.noRecommendations))
@@ -124,11 +162,11 @@ class OrganismDetailScreen extends ConsumerWidget {
                     const SizedBox(width: 12),
                     Expanded(
                       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                        Text(relation.fly!.name, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 16)),
-                        Text('${t.stage(relation.lifeStage)} · ${t.matchType(relation.matchType)}', style: const TextStyle(color: AppColors.muted)),
+                        Text(relation.fly!.name, style: context.serif(18)),
+                        Text('${t.stage(relation.lifeStage)} · ${t.matchType(relation.matchType)}', style: context.secondaryStyle),
                       ]),
                     ),
-                    const Icon(Icons.chevron_right, color: AppColors.muted),
+                    Icon(Icons.chevron_right, color: context.fly.inkSecondary),
                   ]),
                 ),
               ),
@@ -152,20 +190,20 @@ class FlyDetailScreen extends ConsumerWidget {
       body: async.when(
         loading: () => const LoadingView(),
         error: (error, _) => ErrorView(error: error, onRetry: () => ref.invalidate(flyDetailProvider(id))),
-        data: (f) => ListView(padding: const EdgeInsets.fromLTRB(20, 0, 20, 32), children: [
+        data: (f) => ListView(padding: const EdgeInsets.fromLTRB(20, 0, 20, 36), children: [
           if (f.summary.isDemo) const DemoBanner(),
           Text(f.summary.name, style: Theme.of(context).textTheme.headlineMedium),
-          if (f.alternateNames.isNotEmpty) Text(f.alternateNames.join(' · '), style: const TextStyle(color: AppColors.muted)),
-          const SizedBox(height: 10),
+          if (f.alternateNames.isNotEmpty) Padding(padding: const EdgeInsets.only(top: 4), child: Text(f.alternateNames.join(' · '), style: context.secondaryStyle.copyWith(fontSize: 17))),
+          const SizedBox(height: 12),
           Wrap(spacing: 6, runSpacing: 6, children: [
             TagChip(t.category(f.summary.category)),
             TagChip(t.matchType(f.summary.imitationType)),
-            if (f.summary.hookSizeMin != null && f.summary.hookSizeMax != null) TagChip(t.hookRange(f.summary.hookSizeMax!, f.summary.hookSizeMin!)),
+            if (f.summary.hookSizeMin != null && f.summary.hookSizeMax != null) TagChip(t.hookRange(f.summary.hookSizeMax!, f.summary.hookSizeMin!), tone: TagTone.brass),
           ]),
-          const SizedBox(height: 16),
+          const SizedBox(height: 18),
           _Gallery(f.images, flyIcon),
-          if (f.description != null) ...[SectionTitle(t.description), Text(f.description!, style: const TextStyle(height: 1.45))],
-          if (f.usageNotes != null) ...[SectionTitle(t.fishingNotes), Text(f.usageNotes!, style: const TextStyle(height: 1.45))],
+          if (f.description != null) ...[SectionTitle(t.description), Text(f.description!, style: context.readingStyle)],
+          if (f.usageNotes != null) ...[SectionTitle(t.fishingNotes), Text(f.usageNotes!, style: context.readingStyle)],
           if (f.materials.isNotEmpty) ...[
             SectionTitle(t.materials),
             InfoCard(child: Column(children: [for (final m in f.materials) LabeledValue(m.component, m.material)])),
@@ -182,11 +220,14 @@ class FlyDetailScreen extends ConsumerWidget {
               Padding(
                 padding: const EdgeInsets.only(bottom: 8),
                 child: InfoCard(
-                  padding: const EdgeInsets.all(12),
+                  padding: const EdgeInsets.all(14),
                   onTap: () => context.push('/organisms/${relation.organism!.id}'),
                   child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                    Text(relation.organism!.scientificName, style: const TextStyle(fontStyle: FontStyle.italic, fontWeight: FontWeight.w600, fontSize: 16)),
-                    const SizedBox(height: 6),
+                    Row(children: [
+                      Expanded(child: Text(relation.organism!.scientificName, style: context.species(19))),
+                      Icon(Icons.chevron_right, color: context.fly.inkSecondary),
+                    ]),
+                    const SizedBox(height: 8),
                     Wrap(spacing: 6, runSpacing: 6, children: [
                       TagChip(t.stage(relation.lifeStage)),
                       TagChip(t.compatibility(relation.biologicalCompatibility)),
@@ -225,7 +266,7 @@ class ProductsScreen extends ConsumerWidget {
         data: (products) => products.isEmpty
             ? MessageView(icon: Icons.storefront_outlined, message: t.noProducts)
             : ListView.separated(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.fromLTRB(16, 12, 16, 28),
                 itemCount: products.length,
                 separatorBuilder: (_, _) => const SizedBox(height: 8),
                 itemBuilder: (_, index) => ProductTile(products[index]),

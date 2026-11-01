@@ -16,19 +16,27 @@ class ResultHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context);
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      if (photo != null)
+    final fly = context.fly;
+    return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+      if (photo != null) ...[
         ClipRRect(
           borderRadius: BorderRadius.circular(20),
           child: Image.memory(photo!, height: 220, width: double.infinity, fit: BoxFit.cover),
         ),
-      const SizedBox(height: 16),
-      Wrap(spacing: 10, runSpacing: 6, crossAxisAlignment: WrapCrossAlignment.center, children: [
-        Text(t.certainty, style: const TextStyle(color: AppColors.muted)),
-        MatchLevelBadge(result.matchLevel),
-      ]),
-      const SizedBox(height: 6),
-      Text(t.certaintyExplanation, style: const TextStyle(color: AppColors.muted, fontSize: 12)),
+        const SizedBox(height: 16),
+      ],
+      Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(color: fly.card, borderRadius: BorderRadius.circular(16), border: Border.all(color: fly.hairline)),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Wrap(spacing: 12, runSpacing: 8, crossAxisAlignment: WrapCrossAlignment.center, children: [
+            Text(t.certainty, style: context.secondaryStyle),
+            MatchLevelBadge(result.matchLevel),
+          ]),
+          const SizedBox(height: 10),
+          Text(t.certaintyExplanation, style: context.captionStyle),
+        ]),
+      ),
       if (result.warnings.isNotEmpty) ...[const SizedBox(height: 14), NoticeList(result.warnings)],
     ]);
   }
@@ -43,10 +51,10 @@ class SourcesFooter extends StatelessWidget {
     final t = AppLocalizations.of(context);
     if (result.sources.isEmpty) return const SizedBox.shrink();
     return Padding(
-      padding: const EdgeInsets.only(top: 24),
+      padding: const EdgeInsets.only(top: 28),
       child: Text(
         '${t.sources}: ${result.sources.map((s) => s.detail == null ? s.name : '${s.name} (${s.detail})').join(' · ')}',
-        style: const TextStyle(color: AppColors.muted, fontSize: 12),
+        style: context.captionStyle,
       ),
     );
   }
@@ -60,14 +68,18 @@ class ResultActions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context);
-    return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(20, 8, 20, 12),
-        child: Row(children: [
-          Expanded(child: OutlinedButton(onPressed: onHome, child: Text(t.backHome))),
-          const SizedBox(width: 12),
-          Expanded(child: FilledButton(onPressed: onNewPhoto, child: Text(t.newPhoto))),
-        ]),
+    final fly = context.fly;
+    return DecoratedBox(
+      decoration: BoxDecoration(color: fly.canvas, border: Border(top: BorderSide(color: fly.hairline))),
+      child: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(20, 12, 20, 12),
+          child: Row(children: [
+            Expanded(child: OutlinedButton(onPressed: onHome, child: Text(t.backHome))),
+            const SizedBox(width: 12),
+            Expanded(child: FilledButton(onPressed: onNewPhoto, child: Text(t.newPhoto))),
+          ]),
+        ),
       ),
     );
   }
