@@ -7,6 +7,7 @@ import '../../l10n/app_localizations.dart';
 import '../../models/identification.dart';
 import '../../state/identification_controller.dart';
 import '../../widgets/common.dart';
+import '../../widgets/rise_rings.dart';
 
 /// Shows only the phases that really happen: upload progress, then waiting for the server.
 class AnalysisScreen extends ConsumerWidget {
@@ -16,6 +17,7 @@ class AnalysisScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final t = AppLocalizations.of(context);
+    final fly = context.fly;
     final provider = identificationControllerProvider(mode);
     ref.listen(provider, (previous, next) {
       if (next.phase == AnalysisPhase.done && previous?.phase != AnalysisPhase.done) {
@@ -42,27 +44,45 @@ class AnalysisScreen extends ConsumerWidget {
       canPop: !state.busy,
       child: Scaffold(
         body: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(28),
-            child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-              if (state.photo != null)
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
-                  child: Image.memory(state.photo!.bytes, height: 200, fit: BoxFit.cover),
+          child: Center(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(24),
+              child: Column(mainAxisSize: MainAxisSize.min, children: [
+                // The photo sits in the middle of the rise rings: the app is "waiting for the fish".
+                RiseRingsAnimation(
+                  color: fly.ripple,
+                  size: 300,
+                  child: state.photo == null
+                      ? const SizedBox.shrink()
+                      : Container(
+                          width: 152,
+                          height: 152,
+                          decoration: BoxDecoration(shape: BoxShape.circle, border: Border.all(color: fly.card, width: 4)),
+                          clipBehavior: Clip.antiAlias,
+                          child: Image.memory(state.photo!.bytes, width: 152, height: 152, fit: BoxFit.cover),
+                        ),
                 ),
-              const SizedBox(height: 36),
-              _PhaseRow(
-                key: const Key('phase-upload'),
-                label: t.phaseUploading,
-                active: uploading,
-                done: !uploading,
-                progress: uploading ? state.uploadProgress : null,
-              ),
-              const SizedBox(height: 14),
-              _PhaseRow(key: const Key('phase-analyze'), label: t.phaseAnalyzing, active: !uploading, done: false),
-              const SizedBox(height: 28),
-              Text(t.analysisNote, textAlign: TextAlign.center, style: const TextStyle(color: AppColors.muted)),
-            ]),
+                const SizedBox(height: 20),
+                Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(18),
+                    child: Column(children: [
+                      _PhaseRow(
+                        key: const Key('phase-upload'),
+                        label: t.phaseUploading,
+                        active: uploading,
+                        done: !uploading,
+                        progress: uploading ? state.uploadProgress : null,
+                      ),
+                      const SizedBox(height: 16),
+                      _PhaseRow(key: const Key('phase-analyze'), label: t.phaseAnalyzing, active: !uploading, done: false),
+                    ]),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Text(t.analysisNote, textAlign: TextAlign.center, style: context.secondaryStyle),
+              ]),
+            ),
           ),
         ),
       ),
@@ -79,24 +99,25 @@ class _PhaseRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = active || done ? AppColors.forest : AppColors.muted;
+    final fly = context.fly;
+    final color = active || done ? fly.ink : fly.inkSecondary;
     return Column(children: [
       Row(children: [
         SizedBox(
           width: 28,
           height: 28,
           child: done
-              ? const Icon(Icons.check_circle, color: AppColors.forest)
+              ? Icon(Icons.check_circle, color: fly.accent)
               : active
                   ? const CircularProgressIndicator(strokeWidth: 3)
-                  : const Icon(Icons.radio_button_unchecked, color: AppColors.muted),
+                  : Icon(Icons.radio_button_unchecked, color: fly.inkSecondary),
         ),
         const SizedBox(width: 14),
-        Expanded(child: Text(label, style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600, color: color))),
+        Expanded(child: Text(label, style: Theme.of(context).textTheme.titleMedium?.copyWith(color: color))),
       ]),
       if (progress != null)
         Padding(
-          padding: const EdgeInsets.only(left: 42, top: 8),
+          padding: const EdgeInsets.only(left: 42, top: 10),
           child: LinearProgressIndicator(value: progress, minHeight: 6, borderRadius: BorderRadius.circular(3)),
         ),
     ]);

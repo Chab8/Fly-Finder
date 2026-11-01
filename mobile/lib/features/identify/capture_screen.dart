@@ -9,6 +9,7 @@ import '../../services/image_source_service.dart';
 import '../../state/identification_controller.dart';
 import '../../state/providers.dart';
 import '../../widgets/common.dart';
+import '../../widgets/rise_rings.dart';
 
 class CaptureScreen extends ConsumerWidget {
   const CaptureScreen({super.key, required this.mode});
@@ -17,6 +18,7 @@ class CaptureScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final t = AppLocalizations.of(context);
+    final fly = context.fly;
     final state = ref.watch(identificationControllerProvider(mode));
     final controller = ref.read(identificationControllerProvider(mode).notifier);
     final photo = state.photo;
@@ -26,6 +28,27 @@ class CaptureScreen extends ConsumerWidget {
       LocalImageProblem.permissionDenied => t.permissionDenied,
       null => null,
     };
+    final canAnalyze = photo != null && problem == null;
+
+    final camera = photo == null
+        ? FilledButton.icon(
+            key: const Key('capture-camera'),
+            onPressed: () => controller.pick(PhotoSource.camera),
+            icon: const Icon(Icons.photo_camera_outlined),
+            label: Text(t.takePhoto),
+          )
+        : OutlinedButton.icon(
+            key: const Key('capture-camera'),
+            onPressed: () => controller.pick(PhotoSource.camera),
+            icon: const Icon(Icons.photo_camera_outlined),
+            label: Text(t.changePhoto),
+          );
+    final gallery = OutlinedButton.icon(
+      key: const Key('capture-gallery'),
+      onPressed: () => controller.pick(PhotoSource.gallery),
+      icon: const Icon(Icons.photo_library_outlined),
+      label: Text(t.chooseFromGallery),
+    );
 
     return Scaffold(
       appBar: AppBar(
@@ -45,27 +68,40 @@ class CaptureScreen extends ConsumerWidget {
           child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
             Expanded(
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(22),
-                child: Container(
-                  color: AppColors.sandLight,
+                borderRadius: BorderRadius.circular(24),
+                child: ColoredBox(
+                  color: fly.tint,
                   child: photo == null
-                      ? Center(
-                          child: Padding(
-                            padding: const EdgeInsets.all(28),
-                            child: Column(mainAxisSize: MainAxisSize.min, children: [
-                              Icon(mode == IdentifyMode.organism ? organismIcon : flyIcon, size: 64, color: AppColors.olive),
-                              const SizedBox(height: 16),
-                              Text(t.noPhotoSelected, style: Theme.of(context).textTheme.titleMedium),
-                              const SizedBox(height: 8),
-                              Text(
-                                mode == IdentifyMode.organism ? t.captureHintOrganism : t.captureHintFly,
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(color: AppColors.muted),
-                              ),
-                            ]),
+                      ? Stack(children: [
+                          Positioned.fill(
+                            child: Padding(
+                              padding: const EdgeInsets.all(18),
+                              child: ExcludeSemantics(child: CustomPaint(painter: ViewfinderPainter(color: fly.accent.withValues(alpha: 0.6)))),
+                            ),
                           ),
-                        )
-                      : Image.memory(photo.bytes, key: const Key('capture-preview'), fit: BoxFit.contain),
+                          Center(
+                            child: SingleChildScrollView(
+                              padding: const EdgeInsets.symmetric(horizontal: 36, vertical: 36),
+                              child: Column(mainAxisSize: MainAxisSize.min, children: [
+                                Container(
+                                  width: 84,
+                                  height: 84,
+                                  decoration: BoxDecoration(color: fly.card, shape: BoxShape.circle, border: Border.all(color: fly.hairline)),
+                                  child: Icon(mode == IdentifyMode.organism ? organismIcon : flyIcon, size: 40, color: fly.accent),
+                                ),
+                                const SizedBox(height: 20),
+                                Text(t.noPhotoSelected, textAlign: TextAlign.center, style: context.serif(22)),
+                                const SizedBox(height: 10),
+                                Text(
+                                  mode == IdentifyMode.organism ? t.captureHintOrganism : t.captureHintFly,
+                                  textAlign: TextAlign.center,
+                                  style: context.secondaryStyle.copyWith(fontSize: 16),
+                                ),
+                              ]),
+                            ),
+                          ),
+                        ])
+                      : SizedBox.expand(child: Image.memory(photo.bytes, key: const Key('capture-preview'), fit: BoxFit.contain)),
                 ),
               ),
             ),
@@ -74,7 +110,7 @@ class CaptureScreen extends ConsumerWidget {
               NoticeList([Notice('local', problem)]),
             ],
             const SizedBox(height: 16),
-            if (photo != null && problem == null) ...[
+            if (canAnalyze) ...[
               FilledButton.icon(
                 key: const Key('capture-analyze'),
                 onPressed: () {
@@ -85,26 +121,13 @@ class CaptureScreen extends ConsumerWidget {
                 label: Text(t.analyze),
               ),
               const SizedBox(height: 10),
-            ],
-            Row(children: [
-              Expanded(
-                child: OutlinedButton.icon(
-                  key: const Key('capture-camera'),
-                  onPressed: () => controller.pick(PhotoSource.camera),
-                  icon: const Icon(Icons.photo_camera_outlined),
-                  label: Text(photo == null ? t.takePhoto : t.changePhoto),
-                ),
-              ),
-              const SizedBox(width: 10),
-              Expanded(
-                child: OutlinedButton.icon(
-                  key: const Key('capture-gallery'),
-                  onPressed: () => controller.pick(PhotoSource.gallery),
-                  icon: const Icon(Icons.photo_library_outlined),
-                  label: Text(t.chooseFromGallery),
-                ),
-              ),
-            ]),
+              Row(children: [Expanded(child: camera), const SizedBox(width: 10), Expanded(child: gallery)]),
+            ] else if (photo == null) ...[
+              camera,
+              const SizedBox(height: 10),
+              gallery,
+            ] else
+              Row(children: [Expanded(child: camera), const SizedBox(width: 10), Expanded(child: gallery)]),
           ]),
         ),
       ),

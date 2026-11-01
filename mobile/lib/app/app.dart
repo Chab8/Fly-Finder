@@ -27,6 +27,9 @@ class _FlyFinderAppState extends ConsumerState<FlyFinderApp> {
     return MaterialApp.router(
       title: ref.watch(appConfigProvider).appName,
       theme: AppTheme.light(),
+      // Follows the system appearance; there is deliberately no in-app switch.
+      darkTheme: AppTheme.dark(),
+      themeMode: ThemeMode.system,
       routerConfig: _router,
       locale: widget.locale,
       supportedLocales: AppLocalizations.supportedLocales,

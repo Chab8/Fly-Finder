@@ -30,27 +30,29 @@ class ProductTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context);
+    final fly = context.fly;
     final locale = Localizations.localeOf(context).toLanguageTag();
     final price = product.price != null && product.currency != null ? formatPrice(product.price!, product.currency!, locale) : t.priceNotAvailable;
     return InfoCard(
       onTap: () => _open(context),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Row(children: [
+        Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Expanded(child: Text(product.name, style: Theme.of(context).textTheme.titleMedium)),
-          const Icon(Icons.open_in_new, size: 20, color: AppColors.forest),
+          const SizedBox(width: 8),
+          Padding(padding: const EdgeInsets.only(top: 2), child: Icon(Icons.open_in_new, size: 20, color: fly.accent)),
         ]),
         const SizedBox(height: 4),
-        Text('${product.store.name} · ${product.store.country}${product.brand == null ? '' : ' · ${product.brand}'}',
-            style: const TextStyle(color: AppColors.muted)),
-        const SizedBox(height: 10),
-        Wrap(spacing: 6, runSpacing: 6, crossAxisAlignment: WrapCrossAlignment.center, children: [
-          Text(price, key: const Key('product-price'), style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16)),
+        Text('${product.store.name} · ${product.store.country}${product.brand == null ? '' : ' · ${product.brand}'}', style: context.secondaryStyle),
+        const SizedBox(height: 12),
+        Wrap(spacing: 8, runSpacing: 6, crossAxisAlignment: WrapCrossAlignment.center, children: [
+          // Brass means tackle and shops: prices share the colour of hook sizes.
+          Text(price, key: const Key('product-price'), style: context.bodyStyle.copyWith(color: fly.brass, fontWeight: FontWeight.w700, fontSize: 18)),
           TagChip(t.availability(product.availabilityStatus)),
           if (product.shipsToRequestedCountry == true) TagChip(t.shipsToYou, icon: Icons.local_shipping_outlined),
         ]),
         if (product.lastVerifiedAt != null) ...[
-          const SizedBox(height: 6),
-          Text(t.lastVerified(DateFormat.yMMMd(locale).format(product.lastVerifiedAt!.toLocal())), style: const TextStyle(color: AppColors.muted, fontSize: 12)),
+          const SizedBox(height: 8),
+          Text(t.lastVerified(DateFormat.yMMMd(locale).format(product.lastVerifiedAt!.toLocal())), style: context.captionStyle),
         ],
       ]),
     );

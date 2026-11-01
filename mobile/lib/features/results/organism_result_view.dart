@@ -19,7 +19,7 @@ class OrganismResultView extends StatelessWidget {
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context);
     final primary = result.primary;
-    return ListView(padding: const EdgeInsets.fromLTRB(20, 8, 20, 24), children: [
+    return ListView(padding: const EdgeInsets.fromLTRB(20, 8, 20, 28), children: [
       ResultHeader(result: result, photo: photo),
       if (primary != null) ...[
         SectionTitle(t.primaryIdentification),
@@ -33,29 +33,26 @@ class OrganismResultView extends StatelessWidget {
         InfoCard(
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             if (result.colors.isNotEmpty) Wrap(spacing: 6, runSpacing: 6, children: [for (final c in result.colors) TagChip(c)]),
-            for (final feature in result.features)
-              Padding(padding: const EdgeInsets.only(top: 8), child: Text('• $feature')),
+            for (final feature in result.features) BulletText(feature),
             if (result.estimatedLengthMm != null && result.sizeReference != null)
               Padding(
-                padding: const EdgeInsets.only(top: 8),
-                child: Text(t.estimatedLength(result.estimatedLengthMm!.toStringAsFixed(0), result.sizeReference!)),
+                padding: const EdgeInsets.only(top: 10),
+                child: Text(t.estimatedLength(result.estimatedLengthMm!.toStringAsFixed(0), result.sizeReference!), style: context.secondaryStyle),
               ),
           ]),
         ),
       ],
       if (result.alternatives.isNotEmpty) ...[
         SectionTitle(t.alternatives),
-        for (final alt in result.alternatives)
-          Padding(padding: const EdgeInsets.only(bottom: 10), child: _CandidateCard(candidate: alt)),
+        for (final alt in result.alternatives) Padding(padding: const EdgeInsets.only(bottom: 10), child: _CandidateCard(candidate: alt)),
       ],
       if (primary != null) ...[
         SectionTitle(t.recommendedFlies),
         if (result.recommendations.isEmpty)
           InfoCard(child: Text(t.noRecommendations))
         else ...[
-          for (final rec in result.recommendations)
-            Padding(padding: const EdgeInsets.only(bottom: 10), child: RecommendationCard(rec)),
-          Text(t.notAProbability, style: const TextStyle(color: AppColors.muted, fontSize: 12)),
+          for (final rec in result.recommendations) Padding(padding: const EdgeInsets.only(bottom: 10), child: RecommendationCard(rec)),
+          Text(t.notAProbability, style: context.captionStyle),
         ],
       ],
       if (result.similarOrganisms.isNotEmpty) ...[
@@ -64,16 +61,18 @@ class OrganismResultView extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(bottom: 8),
             child: InfoCard(
+              padding: const EdgeInsets.all(12),
               onTap: () => context.push('/organisms/${organism.id}'),
               child: Row(children: [
                 CatalogThumb(url: organism.thumbnailUrl, icon: organismIcon),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                    Text(organism.scientificName, style: const TextStyle(fontStyle: FontStyle.italic, fontWeight: FontWeight.w600)),
-                    Text(t.visualSimilarity(similarity.toStringAsFixed(2)), style: const TextStyle(color: AppColors.muted)),
+                    Text(organism.scientificName, style: context.species(17)),
+                    Text(t.visualSimilarity(similarity.toStringAsFixed(2)), style: context.secondaryStyle),
                   ]),
                 ),
+                Icon(Icons.chevron_right, color: context.fly.inkSecondary),
               ]),
             ),
           ),
@@ -94,30 +93,31 @@ class _CandidateCard extends StatelessWidget {
     final t = AppLocalizations.of(context);
     final organism = candidate.catalogOrganism;
     return InfoCard(
+      highlight: prominent,
       onTap: organism == null ? null : () => context.push('/organisms/${organism.id}'),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Text(
-          candidate.scientificName,
-          style: (prominent ? Theme.of(context).textTheme.titleLarge : Theme.of(context).textTheme.titleMedium)?.copyWith(fontStyle: FontStyle.italic),
-        ),
-        if (candidate.commonName != null) Text(candidate.commonName!, style: const TextStyle(color: AppColors.muted)),
-        const SizedBox(height: 10),
+        Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Expanded(child: Text(candidate.scientificName, style: context.species(prominent ? 26 : 19))),
+          if (organism != null) Padding(padding: const EdgeInsets.only(left: 8, top: 4), child: Icon(Icons.chevron_right, color: context.fly.inkSecondary)),
+        ]),
+        if (candidate.commonName != null) Padding(padding: const EdgeInsets.only(top: 2), child: Text(candidate.commonName!, style: context.secondaryStyle.copyWith(fontSize: 16))),
+        const SizedBox(height: 12),
         Wrap(spacing: 6, runSpacing: 6, children: [
           TagChip(t.rankName(candidate.taxonomicRank)),
           TagChip(t.aiConfidence(t.confidence(candidate.aiConfidence))),
-          if (candidate.taxonomyVerified) TagChip(t.taxonomyVerified, icon: Icons.check, color: AppColors.levelHigh),
+          if (candidate.taxonomyVerified) TagChip(t.taxonomyVerified, icon: Icons.check, tone: TagTone.good),
           TagChip(candidate.inCatalog ? t.inCatalog : t.notInCatalog, icon: candidate.inCatalog ? Icons.menu_book_outlined : Icons.help_outline),
         ]),
         if (prominent) ...[
-          const SizedBox(height: 12),
+          const SizedBox(height: 14),
           LabeledValue(t.order, candidate.order),
           LabeledValue(t.family, candidate.family),
           LabeledValue(t.genus, candidate.genus),
           if (lifeStage != null) LabeledValue(t.lifeStage, t.stage(lifeStage!)),
         ],
         if (candidate.visualEvidence != null) ...[
-          const SizedBox(height: 8),
-          Text(candidate.visualEvidence!, style: const TextStyle(color: AppColors.muted, fontSize: 13)),
+          const SizedBox(height: 10),
+          Text(candidate.visualEvidence!, style: context.secondaryStyle),
         ],
       ]),
     );
@@ -139,22 +139,21 @@ class RecommendationCard extends StatelessWidget {
           const SizedBox(width: 12),
           Expanded(
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text(rec.fly.name, style: Theme.of(context).textTheme.titleMedium),
-              Text(t.category(rec.fly.category), style: const TextStyle(color: AppColors.muted)),
+              Text(rec.fly.name, style: context.serif(18)),
+              Text(t.category(rec.fly.category), style: context.secondaryStyle),
             ]),
           ),
-          const Icon(Icons.chevron_right, color: AppColors.muted),
+          Icon(Icons.chevron_right, color: context.fly.inkSecondary),
         ]),
-        const SizedBox(height: 10),
+        const SizedBox(height: 12),
         Wrap(spacing: 6, runSpacing: 6, children: [
-          TagChip(t.tier(rec.tier), color: rec.tier == 'visual_only' ? AppColors.sand : AppColors.olive),
+          // Documented matches get the "good" tone; a purely visual suggestion stays neutral.
+          TagChip(t.tier(rec.tier), tone: rec.tier == 'visual_only' ? TagTone.neutral : TagTone.good),
           if (rec.lifeStage != null) TagChip(t.stage(rec.lifeStage!)),
           if (rec.matchType != null) TagChip(t.matchType(rec.matchType!)),
           if (rec.tier != 'visual_only') VerificationTag(verified: rec.expertVerified),
         ]),
-        const SizedBox(height: 8),
-        for (final reason in rec.reasons)
-          Padding(padding: const EdgeInsets.only(top: 3), child: Text('• $reason', style: const TextStyle(fontSize: 13))),
+        for (final reason in rec.reasons) BulletText(reason, style: context.secondaryStyle),
       ]),
     );
   }
