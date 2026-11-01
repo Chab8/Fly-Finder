@@ -22,6 +22,7 @@ from app.services.images.processing import ProcessedImage
 logger = logging.getLogger(__name__)
 T = TypeVar("T", bound=BaseModel)
 _MAX_KNOWN_PATTERNS_IN_PROMPT = 150
+_MAX_KNOWN_TAXA_IN_PROMPT = 200
 
 
 def inline_json_schema(model: type[BaseModel]) -> dict[str, Any]:
@@ -101,11 +102,17 @@ class GeminiVisionAnalyzer:
             logger.warning("Gemini response failed schema validation (%d errors)", exc.error_count())
             raise ProviderResponseError("gemini", "The AI response did not match the expected format.") from exc
 
-    def analyze_organism(self, image: ProcessedImage, lang: str = "en") -> OrganismVisionResult:
-        prompt = ORGANISM_PROMPT.format(language=LANGUAGE_NAMES.get(lang, "English"))
+    def analyze_organism(self, image: ProcessedImage, lang: str = "en", known_taxa: list[str] | None = None) -> OrganismVisionResult:
+        names = ", ".join((known_taxa or [])[:_MAX_KNOWN_TAXA_IN_PROMPT]) or "(catalog empty)"
+        prompt = ORGANISM_PROMPT.format(language=LANGUAGE_NAMES.get(lang, "English"), known_taxa=names)
         return self._generate(prompt, image, OrganismVisionResult)
 
-    def analyze_fly(self, image: ProcessedImage, known_patterns: list[str], lang: str = "en") -> FlyVisionResult:
-        names = ", ".join(known_patterns[:_MAX_KNOWN_PATTERNS_IN_PROMPT]) or "(catalog empty)"
+    def analyze_fly(
+        self, image: ProcessedImage, known_patterns: list[str], lang: str = "en", pattern_profiles: list[str] | None = None,
+    ) -> FlyVisionResult:
+        if pattern_profiles:
+            names = "\n" + "\n".join(f"- {line}" for line in pattern_profiles[:_MAX_KNOWN_PATTERNS_IN_PROMPT])
+        else:
+            names = ", ".join(known_patterns[:_MAX_KNOWN_PATTERNS_IN_PROMPT]) or "(catalog empty)"
         prompt = FLY_PROMPT.format(known_patterns=names, language=LANGUAGE_NAMES.get(lang, "English"))
         return self._generate(prompt, image, FlyVisionResult)

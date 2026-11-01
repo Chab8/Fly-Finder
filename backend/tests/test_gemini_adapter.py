@@ -111,6 +111,26 @@ def test_provider_failures_are_classified(image, error, code):
     assert exc.value.code == code
 
 
+def test_fly_profiles_replace_the_plain_name_list(image):
+    gemini, calls = analyzer(json.dumps({"subject_type": "artificial_fly", "image_quality": "good"}))
+    gemini.analyze_fly(image, ["Adams"], "en", ["Adams [dry fly] | colours: grey/brown", "Muddler Minnow [streamer] | head: deer hair"])
+    text = calls.kwargs["input"][0]["text"]
+    assert "- Muddler Minnow [streamer] | head: deer hair" in text
+    assert "category first" in text
+
+
+def test_known_taxa_are_given_to_the_model(image):
+    gemini, calls = analyzer(json.dumps(VALID_ORGANISM))
+    gemini.analyze_organism(image, "en", ["Baetidae (family)", "Hydropsychidae (family)"])
+    assert "Baetidae (family), Hydropsychidae (family)" in calls.kwargs["input"][0]["text"]
+
+
+def test_organism_prompt_works_without_a_catalog(image):
+    gemini, calls = analyzer(json.dumps(VALID_ORGANISM))
+    gemini.analyze_organism(image)
+    assert "(catalog empty)" in calls.kwargs["input"][0]["text"]
+
+
 def test_thinking_level_is_sent_as_generation_config(image):
     gemini, calls = analyzer(json.dumps(VALID_ORGANISM), thinking_level="low")
     gemini.analyze_organism(image)

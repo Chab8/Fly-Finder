@@ -78,7 +78,9 @@ class FlyIdentificationService(IdentificationPipeline):
         image = self.prepare(data, ctx)
         snapshot = self.deps.snapshots.get()
         known_patterns = snapshot.fly_names()
-        vision: FlyVisionResult | None = self.run_ai(lambda: self.deps.analyzer.analyze_fly(image, known_patterns, ctx.lang), ctx)
+        vision: FlyVisionResult | None = self.run_ai(
+            lambda: self.deps.analyzer.analyze_fly(image, known_patterns, ctx.lang, snapshot.fly_profiles()), ctx,
+        )
         vector = self.embed(image, ctx)
         if vision is None and vector is None:
             raise ProviderUnavailableError("analysis", "Image analysis is temporarily unavailable. Please try again later.", code="analysis_unavailable")

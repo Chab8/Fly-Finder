@@ -28,8 +28,8 @@ class DioFlyFinderApi implements FlyFinderApi {
               baseUrl: '${baseUrl.replaceAll(RegExp(r'/+$'), '')}/api/v1',
               connectTimeout: const Duration(seconds: 10),
               sendTimeout: const Duration(seconds: 60),
-              // Gemini analysis has its own 45 s server-side timeout.
-              receiveTimeout: const Duration(seconds: 90),
+              // Gemini analysis has its own 60 s server-side timeout (plus one retry on transient errors).
+              receiveTimeout: const Duration(seconds: 130),
               headers: {'X-Client-Id': clientId},
             ));
 

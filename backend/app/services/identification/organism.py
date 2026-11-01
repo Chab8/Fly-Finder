@@ -103,12 +103,13 @@ class OrganismIdentificationService(IdentificationPipeline):
     # ------------------------------------------------------------- main flow
     def identify(self, data: bytes, ctx: IdentificationContext) -> OrganismIdentificationResponse:
         image = self.prepare(data, ctx)
-        vision: OrganismVisionResult | None = self.run_ai(lambda: self.deps.analyzer.analyze_organism(image, ctx.lang), ctx)
+        snapshot = self.deps.snapshots.get()
+        known_taxa = snapshot.organism_names()
+        vision: OrganismVisionResult | None = self.run_ai(lambda: self.deps.analyzer.analyze_organism(image, ctx.lang, known_taxa), ctx)
         vector = self.embed(image, ctx)
         if vision is None and vector is None:
             raise ProviderUnavailableError("analysis", "Image analysis is temporarily unavailable. Please try again later.", code="analysis_unavailable")
 
-        snapshot = self.deps.snapshots.get()
         organism_hits = [h for h in self.similar("organism", vector, 5) if h.owner_id in snapshot.organisms]
         similar = [
             SimilarCatalogOrganism(organism=snapshot.organism_summary(snapshot.organisms[h.owner_id], ctx.lang), visual_similarity=round(h.similarity, 4))

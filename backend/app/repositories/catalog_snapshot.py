@@ -331,6 +331,25 @@ class CatalogSnapshot:
     def fly_names(self) -> list[str]:
         return sorted(f.name for f in self.flies.values())
 
+    def fly_profiles(self) -> list[str]:
+        """One line per pattern for the vision prompt: name, category, colours and key materials, all from the catalog."""
+        lines = []
+        for fly in sorted(self.flies.values(), key=lambda f: f.name):
+            text = next((t.description for t in fly.texts if t.language == "en" and t.description), "")
+            parts = [f"{fly.name} [{fly.category.value.replace('_', ' ')}]"]
+            if fly.colors:
+                parts.append("colours: " + "/".join(fly.colors))
+            if fly.materials:
+                parts.append("; ".join(f"{m.component}: {m.material}" for m in fly.materials if m.component != "hook"))
+            if text:
+                parts.append(text.rstrip("."))
+            lines.append(" | ".join(p for p in parts if p))
+        return lines
+
+    def organism_names(self) -> list[str]:
+        """Catalog taxa as "Name (rank)", for the vision prompt."""
+        return sorted(f"{o.scientific_name} ({o.taxonomic_rank.value})" for o in self.organisms.values())
+
 
 class SnapshotProvider:
     """Holds the current snapshot; reloads it after `ttl_seconds` (None = never)."""
