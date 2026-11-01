@@ -59,3 +59,7 @@ mobile/android/app/release/
 .idea/
 .vscode/*
 !.vscode/extensions.json
+
+# Fotos propias sin procesar y candidatas descargadas para revisión
+data/local_photos/
+data/review/images/

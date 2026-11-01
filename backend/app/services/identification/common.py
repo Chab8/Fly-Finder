@@ -78,15 +78,24 @@ class IdentificationPipeline:
         if not self.deps.analyzer.available:
             ctx.warn("ai_unavailable")
             return None
-        try:
-            result = call()
-            ctx.ai_available = True
-            return result
-        except ProviderUnavailableError as exc:
-            logger.warning("AI unavailable for %s identification: %s", self.kind, exc.code)
-            ctx.warn("ai_unavailable")
-        except ProviderResponseError:
-            ctx.warn("ai_bad_response")
+        for attempt in (1, 2):
+            try:
+                result = call()
+                ctx.ai_available = True
+                return result
+            except ProviderUnavailableError as exc:
+                # One retry for transient provider errors; timeouts and rate limits are not retried (they would only add delay).
+                if exc.code == "ai_unavailable" and attempt == 1:
+                    logger.info("Retrying AI call for %s identification after a transient error", self.kind)
+                    continue
+                logger.warning("AI unavailable for %s identification: %s", self.kind, exc.code)
+                ctx.warn("ai_unavailable")
+            except ProviderResponseError:
+                if attempt == 1:
+                    logger.info("Retrying AI call for %s identification after an unusable response", self.kind)
+                    continue
+                ctx.warn("ai_bad_response")
+            return None
         return None
 
     def embed(self, image: ProcessedImage, ctx: IdentificationContext) -> np.ndarray | None:

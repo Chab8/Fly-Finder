@@ -91,6 +91,16 @@ Con `GEMINI_TIMEOUT_SECONDS=45`, Flash se corta seguido y la app cae a "solo sim
 
 Cambiar el modelo de embeddings requiere: nueva fila en `model_versions`, migración si cambia la dimensión, y correr `scripts/generate_embeddings.py`. Los vectores de modelos distintos nunca se comparan (la búsqueda filtra por `embedding_model`).
 
+### Lista de taxones del catálogo en el prompt (2026-10-31)
+
+`ORGANISM_PROMPT` ahora incluye los taxones del catálogo (`CatalogSnapshot.organism_names()`, formato "Baetidae (family)") y pide no quedarse en el orden cuando se ven rasgos de una familia. Es opcional para el modelo: si el organismo no está en la lista, debe proponer su taxón real. **Falta medir el efecto** con `scripts/evaluate.py` (línea base con Flash-Lite: familia 6/13, orden 13/13).
+
+### Perfiles de patrones, reintento y timeout (2026-10-31)
+
+- `FLY_PROMPT` ahora recibe una línea por patrón del catálogo (`CatalogSnapshot.fly_profiles()`: categoría, colores, materiales y descripción, todo tomado del catálogo) y pide decidir primero la categoría de la mosca y usar confianza "high" solo con al menos dos rasgos distintivos visibles. La calidad de las descripciones del catálogo determina la calidad de esta ayuda.
+- `run_ai` reintenta una vez ante errores transitorios del proveedor (`ai_unavailable`) y respuestas inválidas. No reintenta timeouts ni límites de cuota.
+- `GEMINI_TIMEOUT_SECONDS` por defecto pasó de 45 a 60 s; la app espera hasta 130 s.
+
 ## Modo DEMO
 
 `DEMO_MODE=true` usa `DemoVisionAnalyzer`: respuestas fijas que nombran registros ficticios (`Demoensis ficticius`, "DEMO Nymph"), sin ningún análisis. Toda respuesta lleva `analysis.is_demo=true`, la advertencia `demo_mode` y la app muestra una franja "MODO DEMO". Una foto muy oscura devuelve `insufficient_image` para probar ese flujo. El modo DEMO está prohibido en producción (la configuración no arranca).

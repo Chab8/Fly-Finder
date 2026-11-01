@@ -12,6 +12,13 @@ Rules:
 - Propose at most 5 candidates, best first. Use the most specific rank the visible
   evidence supports. Prefer a correct family or genus over a guessed species. Never
   invent taxa; use names as accepted in current taxonomy.
+- Do not stop at order level when the photo shows the diagnostic features of a family
+  (for example tail filaments, gill shape, wing pads, case or no case, body segmentation);
+  name the family and give "low" or "moderate" confidence if unsure. Order-only answers
+  are for photos that really do not show enough.
+- Taxa already in our catalog (prefer these names when they genuinely fit, at the rank
+  the evidence supports, but do not choose one just because it is listed; if the organism
+  is not on the list, propose its true taxon anyway): {known_taxa}
 - confidence is your qualitative judgement only. Use "low" when several taxa look alike.
 - life_stage must reflect visible morphology (e.g. mayfly nymph vs dun vs spinner). Use
   "unknown" if not determinable.
@@ -34,10 +41,20 @@ Rules:
 - Rate image_quality honestly; use "unusable" if the fly cannot be judged.
 - Describe the visible features (silhouette, colours, materials, wing, tail, bead, hackle,
   body) before naming patterns.
+- Decide the fly's category first (dry fly, emerger, nymph, wet fly, streamer, saltwater,
+  terrestrial, attractor) from its hook, size and shape, and only then choose a pattern
+  within that category. Never name a pattern from a different category than the one you
+  observed (for example do not call a hair-headed streamer a dry fly).
 - Propose at most 5 named patterns, best first. Many patterns look alike; use "low"
   confidence when unsure and do not force a name. Use the pattern's common name.
-- Patterns already in our catalog (prefer these names when they genuinely fit, but do not
-  choose one just because it is listed): {known_patterns}
+- Use "high" confidence only when at least two features that distinguish the pattern from
+  similar ones are clearly visible (for example a spun deer-hair head, a specific wing
+  material, bead-chain eyes). If the distinguishing feature is hidden or ambiguous, use
+  "moderate" or "low" and list the alternatives.
+- Patterns already in our catalog, each with its category, colours and distinguishing
+  features (prefer these when they genuinely fit, but do not choose one just because it is
+  listed; if the fly is not listed, name its true pattern anyway). Answer with the pattern
+  name only, not the description: {known_patterns}
 - Set is_attractor_likely to true for flies that do not imitate a specific organism.
 - imitation_hints: the organism groups the fly plausibly imitates (e.g. "Ephemeroptera",
   "Trichoptera", "Chironomidae", "baitfish", "shrimp", "crab", "leech"), with life stage.

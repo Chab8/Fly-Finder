@@ -52,7 +52,7 @@ class Settings(BaseSettings):
 
     gemini_api_key: SecretStr | None = None
     gemini_model: str = "gemini-3.8-flash"
-    gemini_timeout_seconds: float = 45.0
+    gemini_timeout_seconds: float = 60.0
     # generation_config.thinking_level (https://ai.google.dev/gemini-api/docs/thinking). The model
     # default (medium) took 20-45 s per photo; lower thinking is the documented way to cut latency.
     gemini_thinking_level: Literal["low", "medium", "high"] = "low"

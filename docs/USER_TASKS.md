@@ -14,7 +14,7 @@ Actualizado: 2026-10-31 (segunda sesión). Las tareas están en orden de priorid
 
 ## 🧭 Decisión pendiente — modelo de Gemini (siguiente paso)
 
-Hoy `backend/.env` dice `GEMINI_MODEL=gemini-3.8-flash`. En la medición tardó entre 23 y 112 segundos por foto: con el límite de 45 s muchas identificaciones se cortan y la app muestra solo similitud visual. `gemini-3.5-flash-lite` tarda unos 5 segundos, acierta el orden siempre, pero rara vez llega a familia.
+Hoy `backend/.env` dice `GEMINI_MODEL=gemini-3.8-flash`. En la medición tardó entre 23 y 112 segundos por foto: con el límite de 45 s (hoy 60 s) muchas identificaciones se cortan y la app muestra solo similitud visual. `gemini-3.5-flash-lite` tarda unos 5 segundos, acierta el orden siempre, pero rara vez llega a familia.
 
 **Mi recomendación**: usar Flash-Lite ahora para que la app sea usable, y volver a medir Flash más adelante (o con cuenta paga, donde la latencia suele ser menor).
 
@@ -26,7 +26,7 @@ GEMINI_MODEL=gemini-3.5-flash-lite
 
 2. Reiniciá el backend y verificá en http://localhost:8000/api/v1/ready que diga `"model": "gemini-3.5-flash-lite"`.
 
-Si preferís quedarte con Flash, subí `GEMINI_TIMEOUT_SECONDS=120` en `backend/.env` y en la app el tiempo de espera de lectura (`receiveTimeout`, hoy 90 s en `mobile/lib/services/fly_finder_api.dart`): las respuestas van a tardar más de un minuto.
+Si preferís quedarte con Flash, subí `GEMINI_TIMEOUT_SECONDS=120` en `backend/.env` y en la app el tiempo de espera de lectura (`receiveTimeout`, hoy 130 s en `mobile/lib/services/fly_finder_api.dart`): las respuestas van a tardar más de un minuto.
 
 ## 🔑 Seguridad
 

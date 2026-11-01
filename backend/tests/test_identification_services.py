@@ -126,6 +126,29 @@ def test_ai_down_falls_back_to_visual_similarity(make_container, snapshot):
     assert response.analysis.ai_available is False
 
 
+def test_transient_ai_error_is_retried_once(make_container):
+    analyzer = FakeAnalyzer(error=ProviderUnavailableError("gemini", "blip", code="ai_unavailable"))
+    container = make_container(analyzer=analyzer)
+    assert "ai_unavailable" in codes(container.organism_service.identify(make_image_bytes(), ctx()))
+    assert len(analyzer.calls) == 2
+
+
+def test_timeouts_and_rate_limits_are_not_retried(make_container):
+    for code in ("ai_timeout", "ai_rate_limited"):
+        analyzer = FakeAnalyzer(error=ProviderUnavailableError("gemini", "slow", code=code))
+        container = make_container(analyzer=analyzer)
+        container.organism_service.identify(make_image_bytes(), ctx())
+        assert len(analyzer.calls) == 1, code
+
+
+def test_fly_prompt_receives_a_profile_for_every_catalog_pattern(make_container, snapshot):
+    analyzer = FakeAnalyzer(fly=FlyVisionResult(subject_type=SubjectType.no_clear_subject, image_quality=ImageQuality.good))
+    container = make_container(analyzer=analyzer)
+    container.fly_service.identify(make_image_bytes(), ctx())
+    assert len(analyzer.fly_profiles) == len(snapshot.flies)
+    assert all("[" in line and "]" in line for line in analyzer.fly_profiles)
+
+
 def test_invalid_ai_answer_is_discarded(make_container):
     container = make_container(analyzer=FakeAnalyzer(error=ProviderResponseError("gemini", "bad")))
     assert "ai_bad_response" in codes(container.organism_service.identify(make_image_bytes(), ctx()))
